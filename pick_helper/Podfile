@@ -1,0 +1,6 @@
+platform :ios, '8.0'
+target 'pick_helper' do
+pod 'AFJSONRPCClient', '~> 2.1.1'
+end
+
+
