@@ -114,7 +114,7 @@
     
     if(textField == self.pick_user_tf){
         
-        textField.returnKeyType = UIReturnKeyNext;
+        textField.returnKeyType = UIReturnKeyDefault;
         [UIView animateWithDuration:0.2 animations:^{
             self.view.transform = CGAffineTransformMakeTranslation(0, -50*S6);
         }];
