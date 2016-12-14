@@ -24,5 +24,7 @@
 #import "YLAutoLayOut.h"
 #import "MBProgressHUD.h"
 #import "PickerNetManager.h"
+#import "GifView.h"
+
 
 #endif /* pch_pch */

@@ -7,7 +7,6 @@
 //
 
 #import "RootViewController.h"
-#import "AppDelegate.h"
 
 @interface RootViewController ()
 
@@ -26,6 +25,14 @@
     // Do any additional setup after loading the view.
 }
 
+-(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag{
+    
+    if(self = [super init]){
+       
+    }
+    return self;
+}
+
 -(void)pick_setNavWithTitle:(NSString *)title{
     
     [self.navigationController.navigationBar setBarTintColor:PICKER_NAV_COLOR];
@@ -39,23 +46,33 @@
 
 -(void)getBundleImg:(NSString *)imgName callback:(GetBundleIMG)block{
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        UIImage * img= [UIImage imageNamed:imgName];
-        NSData * data = UIImagePNGRepresentation(img);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            block(data);
-        });
-//    });
+    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    UIImage * img= [UIImage imageNamed:imgName];
+    NSData * data = UIImagePNGRepresentation(img);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        block(data);
+    });
+    //    });
 }
 
 -(MBProgressHUD *)hud{
     
     if(!_hud){
-     
+        
         _hud = [[MBProgressHUD alloc]initWithFrame:self.view.frame];
         [self.view addSubview:_hud];
     }
     return _hud;
+}
+
+-(void)showAlertView:(NSString *)alertStr time:(NSInteger)time{
+    
+    UIAlertController * alertVc = [UIAlertController alertControllerWithTitle:alertStr message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [self presentViewController:alertVc animated:YES completion:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [alertVc dismissViewControllerAnimated:YES completion:nil];
+        });
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,8 +14,11 @@ typedef void(^GetBundleIMG)(NSData *imgData);
 
 @property (nonatomic,strong) MBProgressHUD * hud;
 
+-(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag;
 -(void)pick_setNavWithTitle:(NSString *)title;
 -(void)createView;
 -(void)getBundleImg:(NSString *)imgName callback:(GetBundleIMG)block;
+-(void)showAlertView:(NSString *)alertStr time:(NSInteger)time;
+
 
 @end
