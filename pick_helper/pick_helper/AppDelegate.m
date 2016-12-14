@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,8 +17,18 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    [self commonSetting];
+    
+    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
+    self.window.rootViewController = nvc;
+    
     return YES;
+}
+
+-(void)commonSetting{
+    
+    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

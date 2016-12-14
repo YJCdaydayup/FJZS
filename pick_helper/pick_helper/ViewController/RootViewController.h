@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^GetBundleIMG)(NSData *imgData);
+
 @interface RootViewController : UIViewController
+
+@property (nonatomic,strong) MBProgressHUD * hud;
+
+-(void)pick_setNavWithTitle:(NSString *)title;
+-(void)createView;
+-(void)getBundleImg:(NSString *)imgName callback:(GetBundleIMG)block;
 
 @end

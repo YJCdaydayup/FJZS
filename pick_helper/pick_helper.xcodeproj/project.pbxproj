@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B58F0428FBD233946BFE5C6 /* libPods-pick_helper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F33F8321D1C1750564C35 /* libPods-pick_helper.a */; };
+		8F11FEF91E00FC660016E563 /* PickerNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F11FEF81E00FC660016E563 /* PickerNetManager.m */; };
+		8F2CA18A1E00B5E800782BEF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA1891E00B5E800782BEF /* LoginViewController.m */; };
 		8F526F1C1E009F1000AB2350 /* add_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F526F031E009F1000AB2350 /* add_sel@2x.png */; };
 		8F526F1D1E009F1000AB2350 /* lose_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F526F041E009F1000AB2350 /* lose_sel@2x.png */; };
 		8F526F1E1E009F1000AB2350 /* @2x_19.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F526F051E009F1000AB2350 /* @2x_19.png */; };
@@ -68,7 +70,6 @@
 		8FF82AA91E00B25A0093DD53 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82A9F1E00B25A0093DD53 /* JSONValueTransformer.m */; };
 		8FF82AB01E00B2640093DD53 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82AAD1E00B2640093DD53 /* MBProgressHUD.m */; };
 		8FF82AB11E00B2640093DD53 /* YLAutoLayOut.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82AAF1E00B2640093DD53 /* YLAutoLayOut.m */; };
-		8FF82AB41E00B2930093DD53 /* YLProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82AB31E00B2930093DD53 /* YLProgressHUD.m */; };
 		8FF82AB81E00B2A50093DD53 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82AB71E00B2A50093DD53 /* UIView+Frame.m */; };
 		8FF82ABB1E00B4040093DD53 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82ABA1E00B4040093DD53 /* RootViewController.m */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,10 @@
 /* Begin PBXFileReference section */
 		6EB3557241384EFA845014FC /* Pods-pick_helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pick_helper.release.xcconfig"; path = "Pods/Target Support Files/Pods-pick_helper/Pods-pick_helper.release.xcconfig"; sourceTree = "<group>"; };
 		836F33F8321D1C1750564C35 /* libPods-pick_helper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pick_helper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F11FEF71E00FC660016E563 /* PickerNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerNetManager.h; sourceTree = "<group>"; };
+		8F11FEF81E00FC660016E563 /* PickerNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerNetManager.m; sourceTree = "<group>"; };
+		8F2CA1881E00B5E800782BEF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		8F2CA1891E00B5E800782BEF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8F526F031E009F1000AB2350 /* add_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_sel@2x.png"; sourceTree = "<group>"; };
 		8F526F041E009F1000AB2350 /* lose_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lose_sel@2x.png"; sourceTree = "<group>"; };
 		8F526F051E009F1000AB2350 /* @2x_19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "@2x_19.png"; sourceTree = "<group>"; };
@@ -190,8 +195,6 @@
 		8FF82AAD1E00B2640093DD53 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		8FF82AAE1E00B2640093DD53 /* YLAutoLayOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLAutoLayOut.h; sourceTree = "<group>"; };
 		8FF82AAF1E00B2640093DD53 /* YLAutoLayOut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLAutoLayOut.m; sourceTree = "<group>"; };
-		8FF82AB21E00B2930093DD53 /* YLProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLProgressHUD.h; sourceTree = "<group>"; };
-		8FF82AB31E00B2930093DD53 /* YLProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLProgressHUD.m; sourceTree = "<group>"; };
 		8FF82AB61E00B2A50093DD53 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		8FF82AB71E00B2A50093DD53 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		8FF82AB91E00B4040093DD53 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -306,6 +309,8 @@
 		8F526F401E00A34400AB2350 /* 登录 */ = {
 			isa = PBXGroup;
 			children = (
+				8F2CA1881E00B5E800782BEF /* LoginViewController.h */,
+				8F2CA1891E00B5E800782BEF /* LoginViewController.m */,
 			);
 			path = "登录";
 			sourceTree = "<group>";
@@ -444,6 +449,8 @@
 		8F8B3ECD1E005CF800D6A104 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8F11FEF71E00FC660016E563 /* PickerNetManager.h */,
+				8F11FEF81E00FC660016E563 /* PickerNetManager.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -461,8 +468,6 @@
 		8F8B3ECF1E005CF800D6A104 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				8FF82AB21E00B2930093DD53 /* YLProgressHUD.h */,
-				8FF82AB31E00B2930093DD53 /* YLProgressHUD.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -797,14 +802,15 @@
 				8FF82AA81E00B25A0093DD53 /* JSONKeyMapper.m in Sources */,
 				8FF82A741E00B1FF0093DD53 /* NSDate+Extension.m in Sources */,
 				8FF82A7C1E00B1FF0093DD53 /* UIView+Extesion.m in Sources */,
-				8FF82AB41E00B2930093DD53 /* YLProgressHUD.m in Sources */,
 				8FF82AB11E00B2640093DD53 /* YLAutoLayOut.m in Sources */,
 				8F8B3E9C1E00593700D6A104 /* AppDelegate.m in Sources */,
 				8FF82AA11E00B25A0093DD53 /* JSONModelArray.m in Sources */,
 				8FF82A751E00B1FF0093DD53 /* NSString+PJR.m in Sources */,
 				8FF82AA51E00B25A0093DD53 /* JSONAPI.m in Sources */,
 				8FF82AA91E00B25A0093DD53 /* JSONValueTransformer.m in Sources */,
+				8F2CA18A1E00B5E800782BEF /* LoginViewController.m in Sources */,
 				8FF82A851E00B23B0093DD53 /* Common.m in Sources */,
+				8F11FEF91E00FC660016E563 /* PickerNetManager.m in Sources */,
 				8FF82A771E00B1FF0093DD53 /* UIBarButtonItem+Extesion.m in Sources */,
 				8FF82AA21E00B25A0093DD53 /* JSONModelClassProperty.m in Sources */,
 				8FF82A761E00B1FF0093DD53 /* Tools.m in Sources */,
