@@ -1,0 +1,285 @@
+//
+//  PickingInViewController.m
+//  pick_helper
+//
+//  Created by 杨力 on 15/12/2016.
+//  Copyright © 2016 杨力. All rights reserved.
+//
+
+#import "PickingInViewController.h"
+
+@interface PickingInViewController ()<UITextFieldDelegate>{
+    
+    UILabel * pick_product;
+    UILabel * pick_default_code;
+    UILabel * pick_location_id;//库位
+    UITextField * pick_qty;
+    UILabel * pick_src_location;//盘位
+    
+    UIButton * addBtn;
+    UIButton * loseBtn;
+    
+    UITextField * pick_left_tf;
+    UITextField * pick_right_tf;
+}
+
+@property (nonatomic,strong) NSNumber * currentQty;
+@property (nonatomic,strong) NSNumber * initialQty;
+
+@end
+
+@implementation PickingInViewController
+
+-(void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self pick_setNavWithTitle:@"入库分拣任务"];
+    [self pick_configViewWithImg:@"jianru" isWeight:NO];
+}
+
+-(void)createView{
+    
+    NSArray * formArray = @[@"产品名称",@"",@"产品编码",@"",@"盘位号",@"",@"数量",@"",@"到库位",@""];
+    for(int i=0;i<formArray.count;i++){
+        
+        UILabel * label = [Tools createLabelWithFrame:CGRectMake(10*S6+i%2*163*S6,NAV_BAR_HEIGHT+50*S6+i/2*75*S6+1.5*S6, 163*S6, 76*S6) textContent:formArray[i] withFont:[UIFont systemFontOfSize:20*S6] textColor:PICKER_TETMAIN_COLOR textAlignment:NSTextAlignmentCenter];
+        if(i%2 == 0){
+            label.width = 163*S6;
+        }else{
+            label.width = 192*S6;
+        }
+        switch (i) {
+            case 1:
+                pick_product = label;
+                break;
+            case 3:
+                pick_default_code = label;
+                break;
+            case 5:
+                pick_src_location = label;
+                break;
+            case 7:
+                [self resetQtyLabel:label];
+                break;
+            case 9:
+                [self resetStoreLabel:label];
+                break;
+            default:
+                break;
+        }
+        label.layer.borderColor = [PICKER_BORDER_COLOR CGColor];
+        label.layer.borderWidth = 0.5*S6;
+        label.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:label];
+    }
+    
+    [self createBottomView];
+    
+    [self setValueToLabel:self.responseObj[@"data"]];
+}
+
+-(void)createBottomView{
+    
+    NSArray * array = @[@"查看上一条",@"查看下一条"];
+    for(int i=0;i<array.count;i++){
+        
+        UIButton * btn = [Tools createNormalButtonWithFrame:CGRectMake(Wscreen/2.0*i,Hscreen- 50*S6, Wscreen/2.0, 50*S6) textContent:array[i] withFont:[UIFont systemFontOfSize:17*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
+        if(i == 0){
+            btn.backgroundColor = RGB_COLOR(231, 140, 59, 1);
+        }else{
+            btn.backgroundColor = PICKER_NAV_COLOR;
+        }
+        btn.tag = i;
+        [self.view addSubview:btn];
+        [btn addTarget:self action:@selector(checkAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+-(void)checkAction:(UIButton *)btn{
+    
+    if(btn.tag == 0){
+        //查看上一条
+        [self checkBeforeTask];
+    }else{
+        //查看下一条
+        [self checkNextTask];
+    }
+}
+
+#pragma mark - 上一条
+-(void)checkBeforeTask{
+    
+    
+}
+
+#pragma mark - 下一条
+-(void)checkNextTask{
+    
+    
+}
+
+-(void)resetStoreLabel:(UILabel *)label{
+    
+    label.userInteractionEnabled = YES;
+    pick_left_tf = [Tools createTextFieldFrame:CGRectMake(25*S6, 17*S6, 55*S6, 45*S6) placeholder:nil bgImageName:nil leftView:nil rightView:nil isPassWord:NO];
+    pick_left_tf.textAlignment = NSTextAlignmentCenter;
+    pick_left_tf.returnKeyType = UIReturnKeyDone;
+    pick_left_tf.delegate = self;
+    [self setObjAppearance:pick_left_tf];
+    [label addSubview:pick_left_tf];
+    
+    pick_right_tf = [Tools createTextFieldFrame:CGRectMake(111*S6, 17*S6, 55*S6, 45*S6) placeholder:nil bgImageName:nil leftView:nil rightView:nil isPassWord:NO];
+    pick_right_tf.textAlignment = NSTextAlignmentCenter;
+    pick_right_tf.returnKeyType = UIReturnKeyDone;
+    pick_right_tf.delegate = self;
+    [self setObjAppearance:pick_right_tf];
+    [label addSubview:pick_right_tf];
+    
+    UIView * line = [[UIView alloc]initWithFrame:CGRectMake(90*S6, 37*S6, 12*S6, 2*S6)];
+    line.backgroundColor = PICKER_TETMAIN_COLOR;
+    [label addSubview:line];
+}
+
+-(void)resetQtyLabel:(UILabel *)label{
+    
+    label.userInteractionEnabled = YES;
+    pick_qty = [Tools createTextFieldFrame:CGRectMake(70*S6, 17*S6, label.width-140*S6, 45*S6) placeholder:nil bgImageName:nil leftView:nil rightView:nil isPassWord:NO];
+    pick_qty.textAlignment = NSTextAlignmentCenter;
+    pick_qty.returnKeyType = UIReturnKeyDone;
+    pick_qty.delegate = self;
+    [self setObjAppearance:pick_qty];
+    [label addSubview:pick_qty];
+    
+    addBtn = [Tools createButtonNormalImage:@"add_btn" selectedImage:nil tag:1 addTarget:self action:@selector(addClick)];
+    addBtn.frame = CGRectMake(20*S6, 22*S6, 35*S6, 35*S6);
+    [label addSubview:addBtn];
+    
+    loseBtn = [Tools createButtonNormalImage:@"lose_btn" selectedImage:nil tag:1 addTarget:self action:@selector(loseClick)];
+    loseBtn.frame = CGRectMake(CGRectGetMaxX(pick_qty.frame)+15*S6, 22*S6, 35*S6, 35*S6);
+    [label addSubview:loseBtn];
+}
+
+-(void)setObjAppearance:(UIView *)view{
+    
+    view.layer.borderWidth = 0.5*S6;
+    view.layer.borderColor = [PICKER_BORDER_COLOR CGColor];
+    view.layer.cornerRadius = 3*S6;
+    view.layer.masksToBounds = YES;
+    view.backgroundColor = RGB_COLOR(234, 234, 234, 1);
+}
+
+-(void)addClick{
+    
+    float qty = [self.currentQty floatValue];
+    qty = qty + 1.0;
+    self.currentQty = [NSNumber numberWithFloat:qty];
+    pick_qty.text = GETSTRING(self.currentQty);
+    [self changeAddBtnState:self.currentQty];
+}
+
+-(void)loseClick{
+    
+    float qty = [self.currentQty floatValue];
+    qty = qty-1.0;
+    self.currentQty = [NSNumber numberWithFloat:qty];
+    pick_qty.text = GETSTRING(self.currentQty);
+    [self changeLoseBtnState:self.currentQty];
+}
+
+-(void)changeAddBtnState:(NSNumber *)currentQty{
+    
+    CGFloat qty = [currentQty floatValue]+1;
+    CGFloat initialQty = [self.initialQty floatValue];
+    if(qty>initialQty){
+        addBtn.enabled = NO;
+    }else{
+        addBtn.enabled = YES;
+    }
+}
+
+-(void)changeLoseBtnState:(NSNumber *)currentQty{
+    
+    CGFloat qty = [currentQty floatValue]-1;
+    if(qty<0){
+        loseBtn.enabled = NO;
+    }else{
+        loseBtn.enabled = YES;
+    }
+}
+
+-(void)setValueToLabel:(NSDictionary *)dict{
+    
+    pick_product.text = dict[@"product"];
+    pick_default_code.text = dict[@"default_code"];
+    pick_src_location.text = dict[@"src_location"];
+    pick_qty.text = [NSString stringWithFormat:@"%@",dict[@"qty"]];
+    self.currentQty = dict[@"qty"];
+    self.initialQty = dict[@"qty"];
+    
+    //修改按钮的状态
+    [self changeAddBtnState:self.currentQty];
+    [self changeLoseBtnState:self.currentQty];
+}
+
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
+    if(textField == pick_qty){
+        [UIView animateWithDuration:0.2 animations:^{
+            
+            self.view.transform = CGAffineTransformMakeTranslation(0, -150*S6);
+        }];
+    }else{
+        [UIView animateWithDuration:0.2 animations:^{
+            
+            self.view.transform = CGAffineTransformMakeTranslation(0, -130*S6);
+        }];
+    }
+    return YES;
+}
+
+-(void)keyBoardWillHide{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+       
+        self.view.transform = CGAffineTransformIdentity;
+        
+    }];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+@end

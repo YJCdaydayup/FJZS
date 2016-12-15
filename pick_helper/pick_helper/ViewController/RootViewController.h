@@ -13,9 +13,14 @@ typedef void(^GetBundleIMG)(NSData *imgData);
 @interface RootViewController : UIViewController
 
 @property (nonatomic,strong) MBProgressHUD * hud;
+@property (nonatomic,strong) id responseObj;
 
+-(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag;
+-(void)pick_configViewWithImg:(NSString *)imgName isWeight:(BOOL)isWeight;
 -(void)pick_setNavWithTitle:(NSString *)title;
 -(void)createView;
 -(void)getBundleImg:(NSString *)imgName callback:(GetBundleIMG)block;
+-(void)showAlertView:(NSString *)alertStr time:(NSInteger)time;
+-(void)pick_loginByThirdParty:(NSError *)error;//根据不同的error，弹出不同的警告
 
 @end

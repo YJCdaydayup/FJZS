@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "WaitingViewController.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
@@ -26,6 +27,15 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide) name:UIKeyboardWillHideNotification object:nil];
     [self pick_setNavWithTitle:@"登录"];
+}
+
+-(void)pickCantainText{
+    
+    NSString * str = [KUSERDEFAUL objectForKey:PICKER_USER];
+    if(str.length > 0){
+        self.pick_user_tf.text = [KUSERDEFAUL objectForKey:PICKER_USER];
+        self.pick_psw_tf.text = [KUSERDEFAUL objectForKey:PICKER_PSW];
+    }
 }
 
 -(void)createView{
@@ -58,6 +68,7 @@
     loginBtn.layer.cornerRadius = 35/2.0*S6;
     loginBtn.layer.masksToBounds = YES;
     [loginBtn addTarget:self action:@selector(loginAction) forControlEvents:UIControlEventTouchUpInside];
+    [self pickCantainText];
 }
 
 -(void)configTf:(UITextField *)tf withView:(NSString *)imgName{
@@ -96,16 +107,20 @@
     [self.hud show:YES];
     
     __block typeof(self)weakSelf = self;
-    NSString * urlStr = @"";
-    NSDictionary * dict = @{};
-    [PickerNetManager pick_requestPickerDataWithURL:urlStr param:dict callback:^(id responseObject, NSError *error) {
+    NSDictionary * dict = @{@"db":PICKER_DATABASE,@"login":self.pick_user_tf.text,@"password":self.pick_psw_tf.text};
+    [PickerNetManager pick_requestPickerDataWithURL:PICKER_LOGIN param:dict callback:^(id responseObject, NSError *error) {
         if(error==nil){
             [weakSelf.hud hide:YES];
             //登录成功
+            [KUSERDEFAUL setObject:self.pick_user_tf.text forKey:PICKER_USER];
+            [KUSERDEFAUL setObject:self.pick_psw_tf.text forKey:PICKER_PSW];
+            
+            WaitingViewController * waitingVc = [[WaitingViewController alloc]init];
+            [self pushToViewControllerWithTransition:waitingVc withDirection:@"right" type:NO];
             
         }else{
             //登录失败
-            
+            [self showAlertView:@"登录失败,请检查网络或重新输入" time:1.5];
         }
     }];
 }
@@ -154,13 +169,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
