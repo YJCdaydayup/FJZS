@@ -9,10 +9,19 @@
 #ifndef UrlDefine_h
 #define UrlDefine_h
 
-/*数据库*/
+/**
+ * 数据库
+ */
 #define PICKER_DATABASE    @"input-weight-1212"
 
-/*客户登录*/
+/**
+ * 客户登录
+ */
 #define PICKER_LOGIN       @"http://192.168.21.45:8079/web/session/authenticate"
+
+/**
+ * 获取任务
+ */
+#define PICKER_TASK        @"http://192.168.21.45:8079/web/dataset/call_kw"
 
 #endif /* UrlDefine_h */

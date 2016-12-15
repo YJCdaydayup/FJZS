@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "PickingInViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +21,7 @@
     
     [self commonSetting];
     
-    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
+    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:[PickingInViewController new]];
     self.window.rootViewController = nvc;
     
     return YES;

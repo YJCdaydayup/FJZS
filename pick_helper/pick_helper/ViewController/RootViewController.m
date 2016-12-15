@@ -25,10 +25,31 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)pick_configViewWithImg:(NSString *)imgName isWeight:(BOOL)isWeight{
+    
+    UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(10*S6, 10*S6+NAV_BAR_HEIGHT, 550/2.0*S6, 30*S6)];
+    [self getBundleImg:imgName callback:^(NSData *imgData) {
+        imgView.image = [UIImage imageWithData:imgData];
+    }];
+    [self.view addSubview:imgView];
+    
+    UIImageView * weihgtImg = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imgView.frame)+17*S6, CGRectGetMinY(imgView.frame), 115/2.0*S6, 30*S6)];
+    if(isWeight){
+        [self getBundleImg:@"weight_sel" callback:^(NSData *imgData) {
+            weihgtImg.image = [UIImage imageWithData:imgData];
+        }];
+    }else{
+        [self getBundleImg:@"weight_nor" callback:^(NSData *imgData) {
+            weihgtImg.image = [UIImage imageWithData:imgData];
+        }];
+    }
+    [self.view addSubview:weihgtImg];
+}
+
 -(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag{
     
     if(self = [super init]){
-       
+        self.responseObj = responseObject;
     }
     return self;
 }
@@ -38,6 +59,7 @@
     [self.navigationController.navigationBar setBarTintColor:PICKER_NAV_COLOR];
     self.title = title;
     self.view.backgroundColor = PICKER_BG_COLOR;
+    self.navigationItem.hidesBackButton = YES;
 }
 
 -(void)createView{
@@ -73,6 +95,10 @@
             [alertVc dismissViewControllerAnimated:YES completion:nil];
         });
     }];
+}
+
+-(void)pick_loginByThirdParty:(NSError *)error{
+    
 }
 
 - (void)didReceiveMemoryWarning {

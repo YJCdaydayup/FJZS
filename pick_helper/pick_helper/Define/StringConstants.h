@@ -60,6 +60,11 @@
 #define kAppFirstLoadKey @"kAppFirstLoadKey"
 
 /**
+ * 转字符串
+ */
+#define GETSTRING(param) [NSString stringWithFormat:@"%@",param]
+
+/**
  *  持久化定义
  */
 #define KUSERDEFAUL [NSUserDefaults standardUserDefaults]
