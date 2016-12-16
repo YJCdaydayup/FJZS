@@ -9,6 +9,7 @@
 #import "WaitingViewController.h"
 #import "PickingInViewController.h"
 #import "WeightViewController.h"
+#import "GetTaskViewController.h"
 
 @interface WaitingViewController(){
     
@@ -70,7 +71,9 @@
     switch (code_int) {
         case 200://首条任务
         {
-            
+            [self stop];
+            GetTaskViewController * taskVc = [[GetTaskViewController alloc]initWithData:responseObj tag:NO];
+            [self pushToViewControllerWithTransition:taskVc withDirection:@"right" type:NO];
         }
             break;
         case 201://获取当前任务

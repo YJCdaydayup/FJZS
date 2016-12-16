@@ -67,6 +67,8 @@
 		8F8B3EA71E00593700D6A104 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8B3EA51E00593700D6A104 /* LaunchScreen.storyboard */; };
 		8F8B3EB21E00593700D6A104 /* pick_helperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B3EB11E00593700D6A104 /* pick_helperTests.m */; };
 		8F8B3EBD1E00593700D6A104 /* pick_helperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B3EBC1E00593700D6A104 /* pick_helperUITests.m */; };
+		8F92BA6F1E046E7500CC547A /* FinishInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F92BA6E1E046E7500CC547A /* FinishInputViewController.m */; };
+		8F92BA721E046E9200CC547A /* GetTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F92BA711E046E9200CC547A /* GetTaskViewController.m */; };
 		8FDABD181E0208BD00EEA8DB /* waiting.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8FDABD171E0208BD00EEA8DB /* waiting.gif */; };
 		8FF82A731E00B1FF0093DD53 /* ButtonSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82A5B1E00B1FF0093DD53 /* ButtonSize.m */; };
 		8FF82A741E00B1FF0093DD53 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF82A5D1E00B1FF0093DD53 /* NSDate+Extension.m */; };
@@ -190,6 +192,10 @@
 		8F8B3EB81E00593700D6A104 /* pick_helperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pick_helperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8B3EBC1E00593700D6A104 /* pick_helperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pick_helperUITests.m; sourceTree = "<group>"; };
 		8F8B3EBE1E00593700D6A104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F92BA6D1E046E7500CC547A /* FinishInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishInputViewController.h; sourceTree = "<group>"; };
+		8F92BA6E1E046E7500CC547A /* FinishInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishInputViewController.m; sourceTree = "<group>"; };
+		8F92BA701E046E9200CC547A /* GetTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetTaskViewController.h; sourceTree = "<group>"; };
+		8F92BA711E046E9200CC547A /* GetTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetTaskViewController.m; sourceTree = "<group>"; };
 		8FDABD171E0208BD00EEA8DB /* waiting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = waiting.gif; sourceTree = "<group>"; };
 		8FF82A571E00B0810093DD53 /* pch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.pch; path = ../pch.pch; sourceTree = "<group>"; };
 		8FF82A5A1E00B1FF0093DD53 /* ButtonSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonSize.h; sourceTree = "<group>"; };
@@ -358,6 +364,8 @@
 		8F526F3D1E00A34400AB2350 /* 入库完成 */ = {
 			isa = PBXGroup;
 			children = (
+				8F92BA6D1E046E7500CC547A /* FinishInputViewController.h */,
+				8F92BA6E1E046E7500CC547A /* FinishInputViewController.m */,
 			);
 			name = "入库完成";
 			path = "pick_helper/ViewController/入库完成";
@@ -424,6 +432,8 @@
 		8F66273C1E03089900C3D897 /* 领取任务 */ = {
 			isa = PBXGroup;
 			children = (
+				8F92BA701E046E9200CC547A /* GetTaskViewController.h */,
+				8F92BA711E046E9200CC547A /* GetTaskViewController.m */,
 			);
 			path = "领取任务";
 			sourceTree = "<group>";
@@ -922,6 +932,7 @@
 				8FF82A781E00B1FF0093DD53 /* UIColor+RandomColor.m in Sources */,
 				8FF82A791E00B1FF0093DD53 /* UIImage+Extesion.m in Sources */,
 				8FF82AA41E00B25A0093DD53 /* NSArray+JSONModel.m in Sources */,
+				8F92BA6F1E046E7500CC547A /* FinishInputViewController.m in Sources */,
 				8FF82AA81E00B25A0093DD53 /* JSONKeyMapper.m in Sources */,
 				8F6627621E035CCF00C3D897 /* WeightViewController.m in Sources */,
 				8FF82A741E00B1FF0093DD53 /* NSDate+Extension.m in Sources */,
@@ -942,6 +953,7 @@
 				8FF82A761E00B1FF0093DD53 /* Tools.m in Sources */,
 				8FF82AA01E00B25A0093DD53 /* JSONModel.m in Sources */,
 				8F180CF91E01C5A80067E28E /* GifView.m in Sources */,
+				8F92BA721E046E9200CC547A /* GetTaskViewController.m in Sources */,
 				8FF82AB01E00B2640093DD53 /* MBProgressHUD.m in Sources */,
 				8FF82AA31E00B25A0093DD53 /* JSONModelError.m in Sources */,
 				8FF82ABB1E00B4040093DD53 /* RootViewController.m in Sources */,

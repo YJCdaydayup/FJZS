@@ -9,6 +9,12 @@
 #import "PickingInViewController.h"
 #import "WeightViewController.h"
 
+typedef enum : NSInteger {
+    PickerNextTaskType,//查看下一条
+    PickerBeforeTaskType,//查看上一条
+    PickerSeperateType,//拆分
+} PickerType;
+
 @interface PickingInViewController ()<UITextFieldDelegate>{
     
     UILabel * pick_product;
@@ -27,6 +33,10 @@
 @property (nonatomic,strong) NSNumber * currentQty;
 @property (nonatomic,strong) NSNumber * initialQty;
 @property (nonatomic,strong) NSDictionary * currentDict;
+@property (nonatomic,assign) PickerType pickerType;
+
+@property (nonatomic,strong) NSMutableDictionary * backToCurrentDict;
+@property (nonatomic,strong) UIButton * checkNextBtn;
 
 @end
 
@@ -40,14 +50,28 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide) name:UIKeyboardWillHideNotification object:nil];
+    
+    [pick_qty addTarget:self action:@selector(test) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide) name:UIKeyboardWillHideNotification object:nil];
+    
     [self pick_setNavWithTitle:@"入库分拣任务"];
     [self pick_configViewWithImg:@"jianru" isWeight:NO];
+}
+
+-(void)test{
+    
+    CGFloat tf_text = [pick_qty.text floatValue];
+    CGFloat initialQty = [self.initialQty floatValue];
+    if(tf_text < 0||tf_text>initialQty){
+        [self showAlertView:@"输入数量非法，请重新输入!" time:1.0];
+        pick_qty.text = GETSTRING(self.initialQty);
+        self.currentQty = self.initialQty;
+    }
 }
 
 -(void)createView{
@@ -101,6 +125,7 @@
             btn.backgroundColor = RGB_COLOR(231, 140, 59, 1);
         }else{
             btn.backgroundColor = PICKER_NAV_COLOR;
+            self.checkNextBtn = btn;
         }
         btn.tag = i;
         [self.view addSubview:btn];
@@ -122,9 +147,17 @@
 #pragma mark - 下一条
 -(void)checkNextTask{
     
+    if(self.pickerType == PickerBeforeTaskType){
+        
+        self.pickerType = PickerNextTaskType;
+        self.currentDict = self.backToCurrentDict;
+        [self setValueToLabel:self.currentDict];
+        return;
+    }
+    
     NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"get_next_line",@"args":@[self.currentDict[@"id"],self.currentQty,[self pickLocaion]],@"kwargs":@{}};
     [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
-       
+        
         if(error == nil){
             
             NSInteger code_int = [responseObject[@"code"]integerValue];
@@ -133,10 +166,14 @@
                     [self showAlertView:@"库位不存在,请重新输入!" time:1.0];
                     break;
                 case 502:
-                    break;
-                case 200:
+                    [self showAlertView:@"库位已预占,请重新输入!" time:1.0];
                     break;
                 case 201:
+                {
+                    self.pickerType = PickerNextTaskType;
+                    self.currentDict = responseObject[@"data"];
+                    [self setValueToLabel:self.currentDict];
+                }
                     break;
                 case 203:
                 {
@@ -155,10 +192,42 @@
     }];
 }
 
-#pragma mark - 下一条
+#pragma mark - 上一条
 -(void)checkBeforeTask{
     
-    
+    if(self.backToCurrentDict == nil){
+        self.backToCurrentDict = [[NSMutableDictionary alloc]initWithDictionary:self.currentDict];
+    }
+    NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"get_pre_line",@"args":@[self.currentDict[@"id"]],@"kwargs":@{}};
+    [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
+        
+        if(error == nil){
+            
+            NSInteger code_int = [responseObject[@"code"]integerValue];
+            switch (code_int) {
+                case 500:
+                    [self showAlertView:@"已经是第一条" time:0.5];
+                    break;
+                case 201:
+                {
+                    self.pickerType = PickerBeforeTaskType;
+                    self.currentDict = responseObject[@"data"];
+                    [self setValueToLabel:self.currentDict];
+                }
+                    break;
+                case 203:
+                {
+                    WeightViewController * weightVc = [[WeightViewController alloc]initWithData:responseObject tag:YES];
+                    [self pushToViewControllerWithTransition:weightVc withDirection:@"right" type:NO];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            [self pick_loginByThirdParty:error];
+        }
+    }];
 }
 
 -(NSString *)pickLocaion{
@@ -222,6 +291,7 @@
     self.currentQty = [NSNumber numberWithFloat:qty];
     pick_qty.text = GETSTRING(self.currentQty);
     [self changeAddBtnState:self.currentQty];
+    [self changeLoseBtnState:self.currentQty];
 }
 
 -(void)loseClick{
@@ -231,6 +301,7 @@
     self.currentQty = [NSNumber numberWithFloat:qty];
     pick_qty.text = GETSTRING(self.currentQty);
     [self changeLoseBtnState:self.currentQty];
+    [self changeAddBtnState:self.currentQty];
 }
 
 -(void)changeAddBtnState:(NSNumber *)currentQty{
@@ -260,12 +331,47 @@
     pick_default_code.text = dict[@"default_code"];
     pick_src_location.text = dict[@"src_location"];
     pick_qty.text = [NSString stringWithFormat:@"%@",dict[@"qty"]];
+    
     self.currentQty = dict[@"qty"];
     self.initialQty = dict[@"qty"];
     
     //修改按钮的状态
     [self changeAddBtnState:self.currentQty];
     [self changeLoseBtnState:self.currentQty];
+    
+    if(self.pickerType == PickerNextTaskType){
+        
+        pick_left_tf.text = nil;
+        pick_right_tf.text = nil;
+        [self changeAbleState:YES];
+        [self.checkNextBtn setTitle:@"查看下一条" forState:UIControlStateNormal];
+    }else if (self.pickerType == PickerSeperateType){
+        
+        [self setLocationValue:dict[@"location_id"]];
+        [self changeAbleState:YES];
+        [self.checkNextBtn setTitle:@"查看下一条" forState:UIControlStateNormal];
+    }else if (self.pickerType == PickerBeforeTaskType){
+        
+        [self setLocationValue:dict[@"location_id"]];
+        [self changeAbleState:NO];
+        [self.checkNextBtn setTitle:@"返回当前任务" forState:UIControlStateNormal];
+    }
+}
+
+-(void)changeAbleState:(BOOL)state{
+    
+    pick_left_tf.enabled = state;
+    pick_right_tf.enabled = state;
+    pick_qty.enabled = state;
+    addBtn.enabled = state;
+    loseBtn.enabled = state;
+}
+
+-(void)setLocationValue:(NSString *)str{
+    
+    NSArray * array = [str componentsSeparatedByString:@"-"];
+    pick_left_tf.text = array[0];
+    pick_right_tf.text = array[1];
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -291,10 +397,15 @@
 -(void)keyBoardWillHide{
     
     [UIView animateWithDuration:0.2 animations:^{
-       
         self.view.transform = CGAffineTransformIdentity;
-        
     }];
+    
+    if([pick_qty.text intValue]==0){
+        
+        [self showAlertView:@"输入数量非法，请重新输入!" time:1.0];
+        pick_qty.text = GETSTRING(self.initialQty);
+        self.currentQty = self.initialQty;
+    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

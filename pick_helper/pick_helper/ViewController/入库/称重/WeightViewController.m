@@ -95,7 +95,7 @@
         case 201://获取当前任务
         {
             PickingInViewController * inputVc = [[PickingInViewController alloc]initWithData:responseObj tag:NO];
-            [self pushToViewControllerWithTransition:inputVc withDirection:@"right" type:NO];
+            [self pushToViewControllerWithTransition:inputVc withDirection:@"left" type:NO];
         }
             break;
         case 203://获取称重明细
