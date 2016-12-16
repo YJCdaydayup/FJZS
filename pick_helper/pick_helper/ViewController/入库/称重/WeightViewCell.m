@@ -8,6 +8,15 @@
 
 #import "WeightViewCell.h"
 
+@interface WeightViewCell()
+
+@property (nonatomic,strong,nullable) UILabel * pick_name;
+@property (nonatomic,strong,nullable) UILabel * pick_bgCode;
+@property (nonatomic,strong,nullable) UILabel * pick_srcCode;
+@property (nonatomic,strong,nullable) UILabel * pick_qty;
+
+@end
+
 @implementation WeightViewCell
 
 - (void)awakeFromNib {
@@ -32,26 +41,37 @@
         switch (i) {
             case 0:
                 label.width = 110*S6;
+                self.pick_name = label;
                 break;
             case 1:
                 label.width = 110*S6;
+                self.pick_bgCode = label;
                 break;
             case 2:
                 label.width = 75*S6;
+                self.pick_srcCode = label;
                 break;
             case 3:
                 label.width = 60*S6;
+                self.pick_qty = label;
+                self.pick_qty.numberOfLines = 2;
                 break;
             default:
                 break;
         }
         sum = sum + label.width;
-        label.backgroundColor = [UIColor whiteColor];
         label.layer.borderColor = [PICKER_BORDER_COLOR CGColor];
         label.layer.borderWidth = 0.5*S6;
         [self.contentView addSubview:label];
     }
+}
+
+-(void)setModel:(WeightModel *)model{
     
+    self.pick_bgCode.text = model.package;
+    self.pick_name.text = model.product;
+    self.pick_qty.text = [NSString stringWithFormat:@"%@           (%@)",model.qty,model.uom];
+    self.pick_srcCode.text = model.src_location;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

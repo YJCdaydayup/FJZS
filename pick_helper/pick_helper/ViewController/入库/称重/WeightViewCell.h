@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeightModel.h"
 
 @interface WeightViewCell : UITableViewCell
+
+@property (nonatomic,strong) WeightModel * model;
 
 @end
