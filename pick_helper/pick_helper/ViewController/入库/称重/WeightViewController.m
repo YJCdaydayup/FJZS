@@ -10,6 +10,7 @@
 #import "WeightViewController.h"
 #import "WeightModel.h"
 #import "WeightViewCell.h"
+#import "PickingInViewController.h"
 
 @interface WeightViewController ()<UITableViewDataSource,UITableViewDelegate>{
     
@@ -76,7 +77,32 @@
  
     if(btn.tag == 1){
      
-        
+        NSDictionary * dict = @{@"model":@"batar.mobile.task",@"method":@"get_task",@"args":@[@""],@"kwargs":@{}};
+        [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
+            if(error == nil){
+                [self inputTask:responseObject];
+            }else{
+                [self pick_loginByThirdParty:error];
+            }
+        }];
+    }
+}
+
+-(void)inputTask:(id)responseObj{
+    
+    NSInteger code_int = [responseObj[@"code"]integerValue];
+    switch (code_int) {
+        case 201://获取当前任务
+        {
+            PickingInViewController * inputVc = [[PickingInViewController alloc]initWithData:responseObj tag:NO];
+            [self pushToViewControllerWithTransition:inputVc withDirection:@"right" type:NO];
+        }
+            break;
+        case 203://获取称重明细
+            break;
+            break;
+        default:
+            break;
     }
 }
 

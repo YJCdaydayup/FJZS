@@ -117,11 +117,12 @@
             
             WaitingViewController * waitingVc = [[WaitingViewController alloc]init];
             [self pushToViewControllerWithTransition:waitingVc withDirection:@"right" type:NO];
-            
         }else{
             //登录失败
-            [self.hud hide:YES];
-            [self showAlertView:@"登录失败,请检查网络或重新输入" time:1.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.hud hide:YES];
+                [self showAlertView:@"登录失败,请检查网络或重新输入" time:0.8];
+            });
         }
     }];
 }

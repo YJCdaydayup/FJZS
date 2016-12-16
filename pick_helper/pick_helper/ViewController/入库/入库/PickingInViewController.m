@@ -119,7 +119,7 @@
     }
 }
 
-#pragma mark - 上一条
+#pragma mark - 下一条
 -(void)checkNextTask{
     
     NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"get_next_line",@"args":@[self.currentDict[@"id"],self.currentQty,[self pickLocaion]],@"kwargs":@{}};
@@ -149,12 +149,10 @@
                 default:
                     break;
             }
-            
         }else{
             [self pick_loginByThirdParty:error];
         }
     }];
-    
 }
 
 #pragma mark - 下一条
