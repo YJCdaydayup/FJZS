@@ -57,6 +57,9 @@
 		8F66275D1E030A7E00C3D897 /* wancheng@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F6627551E030A7E00C3D897 /* wancheng@3x.png */; };
 		8F66275E1E030A7E00C3D897 /* finish@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F6627561E030A7E00C3D897 /* finish@3x.png */; };
 		8F66275F1E030A7E00C3D897 /* jianchu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F6627571E030A7E00C3D897 /* jianchu@3x.png */; };
+		8F6627621E035CCF00C3D897 /* WeightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6627611E035CCE00C3D897 /* WeightViewController.m */; };
+		8F6627651E03608B00C3D897 /* WeightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6627641E03608B00C3D897 /* WeightModel.m */; };
+		8F6627681E0361BA00C3D897 /* WeightViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6627671E0361BA00C3D897 /* WeightViewCell.m */; };
 		8F8B3E991E00593700D6A104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B3E981E00593700D6A104 /* main.m */; };
 		8F8B3E9C1E00593700D6A104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B3E9B1E00593700D6A104 /* AppDelegate.m */; };
 		8F8B3EA21E00593700D6A104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8B3EA01E00593700D6A104 /* Main.storyboard */; };
@@ -167,6 +170,12 @@
 		8F6627551E030A7E00C3D897 /* wancheng@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wancheng@3x.png"; sourceTree = "<group>"; };
 		8F6627561E030A7E00C3D897 /* finish@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finish@3x.png"; sourceTree = "<group>"; };
 		8F6627571E030A7E00C3D897 /* jianchu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jianchu@3x.png"; sourceTree = "<group>"; };
+		8F6627601E035CCE00C3D897 /* WeightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightViewController.h; sourceTree = "<group>"; };
+		8F6627611E035CCE00C3D897 /* WeightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightViewController.m; sourceTree = "<group>"; };
+		8F6627631E03608B00C3D897 /* WeightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightModel.h; sourceTree = "<group>"; };
+		8F6627641E03608B00C3D897 /* WeightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightModel.m; sourceTree = "<group>"; };
+		8F6627661E0361BA00C3D897 /* WeightViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightViewCell.h; sourceTree = "<group>"; };
+		8F6627671E0361BA00C3D897 /* WeightViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightViewCell.m; sourceTree = "<group>"; };
 		8F8B3E941E00593700D6A104 /* pick_helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pick_helper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8B3E981E00593700D6A104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8F8B3E9A1E00593700D6A104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -401,6 +410,12 @@
 		8F66273B1E03089900C3D897 /* 开始称重 */ = {
 			isa = PBXGroup;
 			children = (
+				8F6627601E035CCE00C3D897 /* WeightViewController.h */,
+				8F6627611E035CCE00C3D897 /* WeightViewController.m */,
+				8F6627631E03608B00C3D897 /* WeightModel.h */,
+				8F6627641E03608B00C3D897 /* WeightModel.m */,
+				8F6627661E0361BA00C3D897 /* WeightViewCell.h */,
+				8F6627671E0361BA00C3D897 /* WeightViewCell.m */,
 			);
 			name = "开始称重";
 			path = "称重";
@@ -908,6 +923,7 @@
 				8FF82A791E00B1FF0093DD53 /* UIImage+Extesion.m in Sources */,
 				8FF82AA41E00B25A0093DD53 /* NSArray+JSONModel.m in Sources */,
 				8FF82AA81E00B25A0093DD53 /* JSONKeyMapper.m in Sources */,
+				8F6627621E035CCF00C3D897 /* WeightViewController.m in Sources */,
 				8FF82A741E00B1FF0093DD53 /* NSDate+Extension.m in Sources */,
 				8FF82A7C1E00B1FF0093DD53 /* UIView+Extesion.m in Sources */,
 				8FF82AB11E00B2640093DD53 /* YLAutoLayOut.m in Sources */,
@@ -918,6 +934,8 @@
 				8FF82AA91E00B25A0093DD53 /* JSONValueTransformer.m in Sources */,
 				8F2CA18A1E00B5E800782BEF /* LoginViewController.m in Sources */,
 				8FF82A851E00B23B0093DD53 /* Common.m in Sources */,
+				8F6627651E03608B00C3D897 /* WeightModel.m in Sources */,
+				8F6627681E0361BA00C3D897 /* WeightViewCell.m in Sources */,
 				8F11FEF91E00FC660016E563 /* PickerNetManager.m in Sources */,
 				8FF82A771E00B1FF0093DD53 /* UIBarButtonItem+Extesion.m in Sources */,
 				8FF82AA21E00B25A0093DD53 /* JSONModelClassProperty.m in Sources */,

@@ -21,7 +21,7 @@
     
     [self commonSetting];
     
-    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:[PickingInViewController new]];
+    UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
     self.window.rootViewController = nvc;
     
     return YES;

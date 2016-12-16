@@ -7,6 +7,7 @@
 //
 
 #import "PickingInViewController.h"
+#import "WeightViewController.h"
 
 @interface PickingInViewController ()<UITextFieldDelegate>{
     
@@ -25,6 +26,7 @@
 
 @property (nonatomic,strong) NSNumber * currentQty;
 @property (nonatomic,strong) NSNumber * initialQty;
+@property (nonatomic,strong) NSDictionary * currentDict;
 
 @end
 
@@ -85,8 +87,8 @@
     }
     
     [self createBottomView];
-    
-    [self setValueToLabel:self.responseObj[@"data"]];
+    self.currentDict = self.responseObj[@"data"];
+    [self setValueToLabel:self.currentDict];
 }
 
 -(void)createBottomView{
@@ -118,15 +120,51 @@
 }
 
 #pragma mark - 上一条
+-(void)checkNextTask{
+    
+    NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"get_next_line",@"args":@[self.currentDict[@"id"],self.currentQty,[self pickLocaion]],@"kwargs":@{}};
+    [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
+       
+        if(error == nil){
+            
+            NSInteger code_int = [responseObject[@"code"]integerValue];
+            switch (code_int) {
+                case 501:
+                    [self showAlertView:@"库位不存在,请重新输入!" time:1.0];
+                    break;
+                case 502:
+                    break;
+                case 200:
+                    break;
+                case 201:
+                    break;
+                case 203:
+                {
+                    WeightViewController * weightVc = [[WeightViewController alloc]initWithData:responseObject tag:YES];
+                    [self pushToViewControllerWithTransition:weightVc withDirection:@"right" type:NO];
+                }
+                    break;
+                case 400:
+                    break;
+                default:
+                    break;
+            }
+            
+        }else{
+            [self pick_loginByThirdParty:error];
+        }
+    }];
+    
+}
+
+#pragma mark - 下一条
 -(void)checkBeforeTask{
     
     
 }
 
-#pragma mark - 下一条
--(void)checkNextTask{
-    
-    
+-(NSString *)pickLocaion{
+    return [NSString stringWithFormat:@"%@-%@",pick_left_tf.text,pick_right_tf.text];
 }
 
 -(void)resetStoreLabel:(UILabel *)label{

@@ -120,6 +120,7 @@
             
         }else{
             //登录失败
+            [self.hud hide:YES];
             [self showAlertView:@"登录失败,请检查网络或重新输入" time:1.5];
         }
     }];

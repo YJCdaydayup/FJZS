@@ -8,6 +8,7 @@
 
 #import "WaitingViewController.h"
 #import "PickingInViewController.h"
+#import "WeightViewController.h"
 
 @interface WaitingViewController(){
     
@@ -80,6 +81,11 @@
         }
             break;
         case 203://获取称重明细
+        {
+            [self stop];
+            WeightViewController * weightVc = [[WeightViewController alloc]initWithData:responseObj tag:YES];
+            [self pushToViewControllerWithTransition:weightVc withDirection:@"right" type:NO];
+        }
             break;
         case 400://finished
             break;
