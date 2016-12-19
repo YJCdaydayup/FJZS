@@ -7,6 +7,7 @@
 //
 
 #import "FinishInputViewController.h"
+#import "PickingInViewController.h"
 
 @interface FinishInputViewController ()
 
@@ -44,12 +45,12 @@
     descripLabel.numberOfLines = 2;
     [self.view addSubview:descripLabel];
     
-    UIButton * checkBtn = [Tools createNormalButtonWithFrame:CGRectMake(0, CGRectGetMaxY(descripLabel.frame)+30*S6, Wscreen-130*S6, 35*S6) textContent:@"查看已完成任务" withFont:[UIFont systemFontOfSize:17*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
+    UIButton * checkBtn = [Tools createNormalButtonWithFrame:CGRectMake(0, CGRectGetMaxY(descripLabel.frame)+30*S6, Wscreen-130*S6, 35*S6) textContent:@"查看已完成任务" withFont:[UIFont systemFontOfSize:15*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
     checkBtn.centerX = self.view.centerX;
     checkBtn.backgroundColor = PICKER_NAV_COLOR;
     [self.view addSubview:checkBtn];
     
-    UIButton * finishedBtn = [Tools createNormalButtonWithFrame:CGRectMake(0, CGRectGetMaxY(checkBtn.frame)+20*S6, checkBtn.width, checkBtn.height) textContent:@"确定完成任务" withFont:[UIFont systemFontOfSize:17*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
+    UIButton * finishedBtn = [Tools createNormalButtonWithFrame:CGRectMake(0, CGRectGetMaxY(checkBtn.frame)+20*S6, checkBtn.width, checkBtn.height) textContent:@"确定完成任务" withFont:[UIFont systemFontOfSize:15*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
     finishedBtn.centerX = self.view.centerX;
     finishedBtn.backgroundColor = RGB_COLOR(125, 17, 20, 1);
     [self.view addSubview:finishedBtn];
@@ -63,11 +64,25 @@
     btn.layer.cornerRadius = 35/2.0*S6;
     btn.layer.masksToBounds = YES;
     btn.tag = tag;
-    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitleColor:RGB_COLOR(29, 29, 29, 0.5) forState:UIControlStateHighlighted];
+    [btn addTarget:self action:@selector(btnClicks:) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)btnClick:(UIButton *)btn{
+-(void)btnClicks:(UIButton *)btn{
     
+    if(btn.tag == 0){
+        //查看完成任务
+        PickingInViewController * pickVc = [[PickingInViewController alloc]initWithData:self.responseObj fromVc:self];
+        [self pushToViewControllerWithTransition:pickVc withDirection:@"left" type:NO];
+    }else{
+        //确定完成任务
+        NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"confirm_putaway",@"args":@[self.responseObj[@"data"][@"input_id"]],@"kwargs":@{}};
+        [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
+            
+            
+            
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,13 +91,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

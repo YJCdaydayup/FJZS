@@ -10,6 +10,7 @@
 #import "PickingInViewController.h"
 #import "WeightViewController.h"
 #import "GetTaskViewController.h"
+#import "FinishInputViewController.h"
 
 @interface WaitingViewController(){
     
@@ -91,6 +92,11 @@
         }
             break;
         case 400://finished
+        {
+            [self stop];
+            FinishInputViewController * finishedVc = [[FinishInputViewController alloc]initWithData:responseObj fromVc:self];
+            [self pushToViewControllerWithTransition:finishedVc withDirection:@"right" type:NO];
+        }
             break;
         case 500://keep waiting
             break;

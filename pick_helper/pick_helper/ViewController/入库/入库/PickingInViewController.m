@@ -8,11 +8,13 @@
 
 #import "PickingInViewController.h"
 #import "WeightViewController.h"
+#import "FinishInputViewController.h"
 
 typedef enum : NSInteger {
     PickerNextTaskType,//查看下一条
     PickerBeforeTaskType,//查看上一条
     PickerSeperateType,//拆分后的订单
+    PickerFinishedType,//已经完成
 } PickerType;
 
 @interface PickingInViewController ()<UITextFieldDelegate>{
@@ -53,8 +55,8 @@ typedef enum : NSInteger {
     
     [pick_qty addTarget:self action:@selector(test) forControlEvents:UIControlEventEditingChanged];
     
-    if([self.destinateVc isMemberOfClass:[WeightViewController class]]){
-        self.pickerType = PickerSeperateType;
+    if([self.destinateVc isMemberOfClass:[FinishInputViewController class]]){
+        self.pickerType = PickerFinishedType;
     }
 }
 
@@ -157,6 +159,10 @@ typedef enum : NSInteger {
         self.currentDict = self.backToCurrentDict;
         [self setValueToLabel:self.currentDict];
         return;
+    }else if(self.pickerType == PickerFinishedType){
+        
+        [self popToViewControllerWithDirection:@"right" type:NO];
+        return;
     }
     
     NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"get_next_line",@"args":@[self.currentDict[@"id"],self.currentQty,[self pickLocaion]],@"kwargs":@{}};
@@ -174,9 +180,8 @@ typedef enum : NSInteger {
                     break;
                 case 201:
                 {
-                    if(self.pickerType != PickerSeperateType){
-                        self.pickerType = PickerNextTaskType;
-                    }
+                    [self.backToCurrentDict removeAllObjects];
+                    self.pickerType = PickerNextTaskType;
                     self.currentDict = responseObject[@"data"];
                     [self setValueToLabel:self.currentDict];
                 }
@@ -188,6 +193,10 @@ typedef enum : NSInteger {
                 }
                     break;
                 case 400:
+                {
+                    FinishInputViewController * finishedVc = [[FinishInputViewController alloc]initWithData:responseObject fromVc:self];
+                    [self pushToViewControllerWithTransition:finishedVc withDirection:@"right" type:NO];
+                }
                     break;
                 default:
                     break;
@@ -201,9 +210,10 @@ typedef enum : NSInteger {
 #pragma mark - 上一条
 -(void)checkBeforeTask{
     
-    if(self.backToCurrentDict == nil){
+    if(self.backToCurrentDict.allKeys.count == 0){
         self.backToCurrentDict = [[NSMutableDictionary alloc]initWithDictionary:self.currentDict];
     }
+    
     NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"get_pre_line",@"args":@[self.currentDict[@"id"]],@"kwargs":@{}};
     [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
         
@@ -345,6 +355,17 @@ typedef enum : NSInteger {
     [self changeAddBtnState:self.currentQty];
     [self changeLoseBtnState:self.currentQty];
     
+    NSString * locationId = dict[@"location_id"];
+    if(locationId.length>0&&self.pickerType != PickerBeforeTaskType){
+        self.pickerType = PickerSeperateType;
+    }
+    
+    if(self.pickerType == PickerFinishedType){
+     
+        [self setLocationValue:dict[@"location_id"]];
+        [self changeAbleState:NO];
+        [self.checkNextBtn setTitle:@"任务已完成" forState:UIControlStateNormal];
+    }
     if(self.pickerType == PickerNextTaskType){
         
         pick_left_tf.text = nil;
