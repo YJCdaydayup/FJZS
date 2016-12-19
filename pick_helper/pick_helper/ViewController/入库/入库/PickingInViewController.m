@@ -54,10 +54,6 @@ typedef enum : NSInteger {
     [super viewWillAppear:animated];
     
     [pick_qty addTarget:self action:@selector(test) forControlEvents:UIControlEventEditingChanged];
-    
-    if([self.destinateVc isMemberOfClass:[FinishInputViewController class]]){
-        self.pickerType = PickerFinishedType;
-    }
 }
 
 - (void)viewDidLoad {
@@ -247,6 +243,7 @@ typedef enum : NSInteger {
 }
 
 -(NSString *)pickLocaion{
+    
     return [NSString stringWithFormat:@"%@-%@",pick_left_tf.text,pick_right_tf.text];
 }
 
@@ -284,6 +281,7 @@ typedef enum : NSInteger {
     
     addBtn = [Tools createButtonNormalImage:@"add_btn" selectedImage:nil tag:1 addTarget:self action:@selector(addClick)];
     addBtn.frame = CGRectMake(20*S6, 22*S6, 35*S6, 35*S6);
+    addBtn.enabled = NO;
     [label addSubview:addBtn];
     
     loseBtn = [Tools createButtonNormalImage:@"lose_btn" selectedImage:nil tag:1 addTarget:self action:@selector(loseClick)];
@@ -351,22 +349,22 @@ typedef enum : NSInteger {
     self.currentQty = dict[@"qty"];
     self.initialQty = dict[@"qty"];
     
-    //修改按钮的状态
-    [self changeAddBtnState:self.currentQty];
-    [self changeLoseBtnState:self.currentQty];
-    
-    NSString * locationId = dict[@"location_id"];
-    if(locationId.length>0&&self.pickerType != PickerBeforeTaskType){
-        self.pickerType = PickerSeperateType;
+    if([self.destinateVc isKindOfClass:[FinishInputViewController class]]){
+        self.pickerType = PickerFinishedType;
+    }else{
+        
+        NSString * locationId = dict[@"location_id"];
+        if(locationId.length>0&&self.pickerType != PickerBeforeTaskType){
+            self.pickerType = PickerSeperateType;
+        }
     }
-    
+
     if(self.pickerType == PickerFinishedType){
      
         [self setLocationValue:dict[@"location_id"]];
         [self changeAbleState:NO];
         [self.checkNextBtn setTitle:@"任务已完成" forState:UIControlStateNormal];
-    }
-    if(self.pickerType == PickerNextTaskType){
+    }else if(self.pickerType == PickerNextTaskType){
         
         pick_left_tf.text = nil;
         pick_right_tf.text = nil;
@@ -392,6 +390,12 @@ typedef enum : NSInteger {
     pick_qty.enabled = state;
     addBtn.enabled = state;
     loseBtn.enabled = state;
+    
+    if(self.pickerType == PickerNextTaskType||self.pickerType == PickerSeperateType){
+        //修改按钮的状态
+        [self changeAddBtnState:self.currentQty];
+        [self changeLoseBtnState:self.currentQty];
+    }
 }
 
 -(void)setLocationValue:(NSString *)str{

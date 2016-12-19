@@ -20,6 +20,7 @@ typedef void(^GetBundleIMG)(NSData *imgData);
 -(instancetype)initWithData:(id)responseObject fromVc:(id)Vc;
 -(void)pick_configViewWithImg:(NSString *)imgName isWeight:(BOOL)isWeight;
 -(void)pick_setNavWithTitle:(NSString *)title;
+-(void)pick_configViewWithPickOutImg:(NSString *)imgName;
 -(void)createView;
 -(void)getBundleImg:(NSString *)imgName callback:(GetBundleIMG)block;
 -(void)showAlertView:(NSString *)alertStr time:(NSInteger)time;

@@ -46,6 +46,15 @@
     [self.view addSubview:weihgtImg];
 }
 
+-(void)pick_configViewWithPickOutImg:(NSString *)imgName{
+    
+    UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(10*S6, 10*S6+NAV_BAR_HEIGHT, 427/2.0*S6, 30*S6)];
+    [self getBundleImg:imgName callback:^(NSData *imgData) {
+        imgView.image = [UIImage imageWithData:imgData];
+    }];
+    [self.view addSubview:imgView];
+}
+
 -(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag{
     
     if(self = [super init]){

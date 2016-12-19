@@ -8,6 +8,7 @@
 
 #import "FinishInputViewController.h"
 #import "PickingInViewController.h"
+#import "WaitingViewController.h"
 
 @interface FinishInputViewController ()
 
@@ -19,10 +20,14 @@
     [super viewDidLoad];
     
     [self pick_setNavWithTitle:@"入库分拣完成"];
-    [self pick_configViewWithImg:@"wancheng" isWeight:NO];
 }
 
 -(void)createView{
+    
+    for(UIView * subView in self.view.subviews){
+        [subView removeFromSuperview];
+    }
+    [self pick_configViewWithImg:@"wancheng" isWeight:NO];
     
     UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(10*S6, NAV_BAR_HEIGHT+50*S6, Wscreen-20*S6, Hscreen-90*S6-NAV_BAR_HEIGHT-50*S6)];
     bgView.layer.borderColor = [PICKER_BORDER_COLOR CGColor];
@@ -76,11 +81,26 @@
         [self pushToViewControllerWithTransition:pickVc withDirection:@"left" type:NO];
     }else{
         //确定完成任务
+        self.hud.labelText = @"正在提交任务,请稍后...";
+        [self.hud show:YES];
         NSDictionary * dict = @{@"model":@"batar.input.mobile",@"method":@"confirm_putaway",@"args":@[self.responseObj[@"data"][@"input_id"]],@"kwargs":@{}};
         [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
             
-            
-            
+            if(error == nil){
+                if(responseObject){
+                    //完成
+                    [self.hud hide:YES];
+                    WaitingViewController * waitingVc = [[WaitingViewController alloc]initWithData:responseObject fromVc:self];
+                    [self presentViewController:waitingVc animated:YES completion:^{
+                        [self removeFromParentViewController];
+                    }];
+                }else{
+                    //失败
+                    [self showAlertView:@"确认失败，请重试!" time:1.0];
+                }
+            }else{
+                [self pick_loginByThirdParty:error];
+            }
         }];
     }
 }

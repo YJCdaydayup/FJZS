@@ -60,6 +60,8 @@
 		8F6627621E035CCF00C3D897 /* WeightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6627611E035CCE00C3D897 /* WeightViewController.m */; };
 		8F6627651E03608B00C3D897 /* WeightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6627641E03608B00C3D897 /* WeightModel.m */; };
 		8F6627681E0361BA00C3D897 /* WeightViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6627671E0361BA00C3D897 /* WeightViewCell.m */; };
+		8F8047891E0862830018F8FA /* PickingOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8047881E0862830018F8FA /* PickingOutViewController.m */; };
+		8F80478C1E0862A50018F8FA /* PickingOutFinisedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F80478B1E0862A50018F8FA /* PickingOutFinisedViewController.m */; };
 		8F8B3E991E00593700D6A104 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B3E981E00593700D6A104 /* main.m */; };
 		8F8B3E9C1E00593700D6A104 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B3E9B1E00593700D6A104 /* AppDelegate.m */; };
 		8F8B3EA21E00593700D6A104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8B3EA01E00593700D6A104 /* Main.storyboard */; };
@@ -178,6 +180,10 @@
 		8F6627641E03608B00C3D897 /* WeightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightModel.m; sourceTree = "<group>"; };
 		8F6627661E0361BA00C3D897 /* WeightViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightViewCell.h; sourceTree = "<group>"; };
 		8F6627671E0361BA00C3D897 /* WeightViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightViewCell.m; sourceTree = "<group>"; };
+		8F8047871E0862830018F8FA /* PickingOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PickingOutViewController.h; path = "../../出库完成/PickingOutViewController.h"; sourceTree = "<group>"; };
+		8F8047881E0862830018F8FA /* PickingOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickingOutViewController.m; path = "../../出库完成/PickingOutViewController.m"; sourceTree = "<group>"; };
+		8F80478A1E0862A50018F8FA /* PickingOutFinisedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickingOutFinisedViewController.h; sourceTree = "<group>"; };
+		8F80478B1E0862A50018F8FA /* PickingOutFinisedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickingOutFinisedViewController.m; sourceTree = "<group>"; };
 		8F8B3E941E00593700D6A104 /* pick_helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pick_helper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8B3E981E00593700D6A104 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8F8B3E9A1E00593700D6A104 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -374,6 +380,7 @@
 		8F526F3E1E00A34400AB2350 /* 出库 */ = {
 			isa = PBXGroup;
 			children = (
+				8F8047861E0862560018F8FA /* 分拣出库 */,
 				8F526F3F1E00A34400AB2350 /* 出库完成 */,
 			);
 			path = "出库";
@@ -382,6 +389,8 @@
 		8F526F3F1E00A34400AB2350 /* 出库完成 */ = {
 			isa = PBXGroup;
 			children = (
+				8F80478A1E0862A50018F8FA /* PickingOutFinisedViewController.h */,
+				8F80478B1E0862A50018F8FA /* PickingOutFinisedViewController.m */,
 			);
 			name = "出库完成";
 			path = "pick_helper/ViewController/出库完成";
@@ -436,6 +445,15 @@
 				8F92BA711E046E9200CC547A /* GetTaskViewController.m */,
 			);
 			path = "领取任务";
+			sourceTree = "<group>";
+		};
+		8F8047861E0862560018F8FA /* 分拣出库 */ = {
+			isa = PBXGroup;
+			children = (
+				8F8047871E0862830018F8FA /* PickingOutViewController.h */,
+				8F8047881E0862830018F8FA /* PickingOutViewController.m */,
+			);
+			path = "分拣出库";
 			sourceTree = "<group>";
 		};
 		8F8B3E8B1E00593700D6A104 = {
@@ -952,10 +970,12 @@
 				8FF82AA21E00B25A0093DD53 /* JSONModelClassProperty.m in Sources */,
 				8FF82A761E00B1FF0093DD53 /* Tools.m in Sources */,
 				8FF82AA01E00B25A0093DD53 /* JSONModel.m in Sources */,
+				8F8047891E0862830018F8FA /* PickingOutViewController.m in Sources */,
 				8F180CF91E01C5A80067E28E /* GifView.m in Sources */,
 				8F92BA721E046E9200CC547A /* GetTaskViewController.m in Sources */,
 				8FF82AB01E00B2640093DD53 /* MBProgressHUD.m in Sources */,
 				8FF82AA31E00B25A0093DD53 /* JSONModelError.m in Sources */,
+				8F80478C1E0862A50018F8FA /* PickingOutFinisedViewController.m in Sources */,
 				8FF82ABB1E00B4040093DD53 /* RootViewController.m in Sources */,
 				8FF82A731E00B1FF0093DD53 /* ButtonSize.m in Sources */,
 				8FF82AA71E00B25A0093DD53 /* JSONModel+networking.m in Sources */,

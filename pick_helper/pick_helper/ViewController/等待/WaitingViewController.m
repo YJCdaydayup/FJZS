@@ -11,6 +11,8 @@
 #import "WeightViewController.h"
 #import "GetTaskViewController.h"
 #import "FinishInputViewController.h"
+#import "PickingOutFinisedViewController.h"
+#import "PickingOutViewController.h"
 
 @interface WaitingViewController(){
     
@@ -107,6 +109,35 @@
 
 -(void)pickTask:(id)responseObj{
     
+    NSInteger code_int = [responseObj[@"code"]integerValue];
+    switch (code_int) {
+        case 200://首条任务
+        {
+            [self stop];
+        }
+            break;
+        case 201://获取当前任务
+        {
+            [self stop];
+            PickingOutViewController * pickingVc = [[PickingOutViewController alloc]initWithData:responseObj fromVc:self];
+            [self pushToViewControllerWithTransition:pickingVc withDirection:@"left" type:NO];
+        }
+            break;
+        case 203://获取称重明细
+        {
+            [self stop];
+        }
+            break;
+        case 400://finished
+        {
+            [self stop];
+        }
+            break;
+        case 500://keep waiting
+            break;
+        default:
+            break;
+    }
 }
 
 -(void)stop{
