@@ -94,7 +94,7 @@
     switch (code_int) {
         case 201://获取当前任务
         {
-            PickingInViewController * inputVc = [[PickingInViewController alloc]initWithData:responseObj tag:NO];
+            PickingInViewController * inputVc = [[PickingInViewController alloc]initWithData:responseObj fromVc:self];
             [self pushToViewControllerWithTransition:inputVc withDirection:@"left" type:NO];
         }
             break;

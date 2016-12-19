@@ -16,7 +16,58 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self pick_setNavWithTitle:@"入库分拣完成"];
+    [self pick_configViewWithImg:@"wancheng" isWeight:NO];
+}
+
+-(void)createView{
+    
+    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(10*S6, NAV_BAR_HEIGHT+50*S6, Wscreen-20*S6, Hscreen-90*S6-NAV_BAR_HEIGHT-50*S6)];
+    bgView.layer.borderColor = [PICKER_BORDER_COLOR CGColor];
+    bgView.layer.borderWidth = 1.0*S6;
+    [self.view addSubview:bgView];
+    
+    UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, NAV_BAR_HEIGHT+100*S6,147/2*S6, 73*S6)];
+    imgView.centerX = self.view.centerX;
+    [self getBundleImg:@"duigou" callback:^(NSData *imgData) {
+        imgView.image = [UIImage imageWithData:imgData];
+    }];
+    [self.view addSubview:imgView];
+    
+    UILabel * titleLable = [Tools createLabelWithFrame:CGRectMake(0, CGRectGetMaxY(imgView.frame)+50*S6, Wscreen,26*S6) textContent:@"分拣任务已全部完成" withFont:[UIFont systemFontOfSize:26*S6] textColor:[UIColor blackColor] textAlignment:NSTextAlignmentCenter];
+    titleLable.centerX = self.view.centerX;
+    [self.view addSubview:titleLable];
+    
+    UILabel * descripLabel = [Tools createLabelWithFrame:CGRectMake(0, CGRectGetMaxY(titleLable.frame)+20*S6, Wscreen-150*S6, 60*S6) textContent:@"入库分拣任务已全部完成，请确认所有货品都已正确入库。" withFont:[UIFont systemFontOfSize:17*S6] textColor:PICKER_TETMAIN_COLOR textAlignment:NSTextAlignmentLeft];
+    descripLabel.centerX = self.view.centerX;
+    descripLabel.numberOfLines = 2;
+    [self.view addSubview:descripLabel];
+    
+    UIButton * checkBtn = [Tools createNormalButtonWithFrame:CGRectMake(0, CGRectGetMaxY(descripLabel.frame)+30*S6, Wscreen-130*S6, 35*S6) textContent:@"查看已完成任务" withFont:[UIFont systemFontOfSize:17*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
+    checkBtn.centerX = self.view.centerX;
+    checkBtn.backgroundColor = PICKER_NAV_COLOR;
+    [self.view addSubview:checkBtn];
+    
+    UIButton * finishedBtn = [Tools createNormalButtonWithFrame:CGRectMake(0, CGRectGetMaxY(checkBtn.frame)+20*S6, checkBtn.width, checkBtn.height) textContent:@"确定完成任务" withFont:[UIFont systemFontOfSize:17*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
+    finishedBtn.centerX = self.view.centerX;
+    finishedBtn.backgroundColor = RGB_COLOR(125, 17, 20, 1);
+    [self.view addSubview:finishedBtn];
+    
+    [self configBtn:checkBtn withTag:0];
+    [self configBtn:finishedBtn withTag:1];
+}
+
+-(void)configBtn:(UIButton *)btn withTag:(NSInteger)tag{
+    
+    btn.layer.cornerRadius = 35/2.0*S6;
+    btn.layer.masksToBounds = YES;
+    btn.tag = tag;
+    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)btnClick:(UIButton *)btn{
+    
 }
 
 - (void)didReceiveMemoryWarning {

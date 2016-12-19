@@ -14,8 +14,10 @@ typedef void(^GetBundleIMG)(NSData *imgData);
 
 @property (nonatomic,strong) MBProgressHUD * hud;
 @property (nonatomic,strong) id responseObj;
+@property (nonatomic,strong) id destinateVc;
 
 -(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag;
+-(instancetype)initWithData:(id)responseObject fromVc:(id)Vc;
 -(void)pick_configViewWithImg:(NSString *)imgName isWeight:(BOOL)isWeight;
 -(void)pick_setNavWithTitle:(NSString *)title;
 -(void)createView;

@@ -54,6 +54,15 @@
     return self;
 }
 
+-(instancetype)initWithData:(id)responseObject fromVc:(id)Vc{
+    
+    if(self = [super init]){
+        self.responseObj = responseObject;
+        self.destinateVc = Vc;
+    }
+    return self;
+}
+
 -(void)pick_setNavWithTitle:(NSString *)title{
     
     [self.navigationController.navigationBar setBarTintColor:PICKER_NAV_COLOR];

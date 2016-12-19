@@ -12,7 +12,7 @@
 typedef enum : NSInteger {
     PickerNextTaskType,//查看下一条
     PickerBeforeTaskType,//查看上一条
-    PickerSeperateType,//拆分
+    PickerSeperateType,//拆分后的订单
 } PickerType;
 
 @interface PickingInViewController ()<UITextFieldDelegate>{
@@ -52,6 +52,10 @@ typedef enum : NSInteger {
     [super viewWillAppear:animated];
     
     [pick_qty addTarget:self action:@selector(test) forControlEvents:UIControlEventEditingChanged];
+    
+    if([self.destinateVc isMemberOfClass:[WeightViewController class]]){
+        self.pickerType = PickerSeperateType;
+    }
 }
 
 - (void)viewDidLoad {
@@ -170,7 +174,9 @@ typedef enum : NSInteger {
                     break;
                 case 201:
                 {
-                    self.pickerType = PickerNextTaskType;
+                    if(self.pickerType != PickerSeperateType){
+                        self.pickerType = PickerNextTaskType;
+                    }
                     self.currentDict = responseObject[@"data"];
                     [self setValueToLabel:self.currentDict];
                 }
