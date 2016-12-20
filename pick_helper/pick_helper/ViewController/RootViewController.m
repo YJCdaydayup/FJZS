@@ -11,7 +11,9 @@
 #import "LoginViewController.h"
 
 @interface RootViewController ()
+
 @property (nonatomic,strong) UIAlertController * alertVc;
+
 @end
 
 @implementation RootViewController

@@ -12,16 +12,16 @@
 /**
  * 数据库
  */
-#define PICKER_DATABASE    @"input-weight-1212"
+#define PICKER_DATABASE    @"odoo"
 
 /**
  * 客户登录
  */
-#define PICKER_LOGIN       @"http://192.168.21.45:8079/web/session/authenticate"
+#define PICKER_LOGIN       @"http://192.168.32.102:8808/web/session/authenticate"
 
 /**
  * 获取任务
  */
-#define PICKER_TASK        @"http://192.168.21.45:8079/web/dataset/call_kw"
+#define PICKER_TASK        @"http://192.168.32.102:8808/web/dataset/call_kw"
 
 #endif /* UrlDefine_h */
