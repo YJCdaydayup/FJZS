@@ -46,6 +46,9 @@ typedef enum : NSInteger{
 @property (nonatomic,strong) NSNumber * initialQty;
 
 @property (nonatomic,strong) NSMutableDictionary * backToCurrentDict;
+
+@property (nonatomic,assign) BOOL isReturned;
+
 @end
 
 @implementation PickingOutViewController
@@ -257,6 +260,15 @@ typedef enum : NSInteger{
                 case 500:
                     [self showAlertView:@"已经是第一条" time:1.0];
                     break;
+                case 300:
+                {
+                    if(self.pickOutType != PickerFromFinishType){
+                        self.pickOutType = PickerCheckBeforeType;
+                    }
+                    self.currentDict = responseObject[@"data"];
+                    [self setValueToLabel:self.currentDict];
+                }
+                    break;
                 default:
                     break;
             }
@@ -302,6 +314,14 @@ typedef enum : NSInteger{
                     PickingOutFinisedViewController * pickVc = [[PickingOutFinisedViewController alloc]initWithData:responseObject fromVc:self];
                     [self pushToViewControllerWithTransition:pickVc withDirection:@"left" type:NO];
                 }
+                    break;
+                case 300:
+                {
+                    [self.backToCurrentDict removeAllObjects];
+                    self.currentDict = responseObject[@"data"];
+                    [self setValueToLabel:self.currentDict];
+                }
+                    break;
                 default:
                     break;
             }
@@ -332,10 +352,29 @@ typedef enum : NSInteger{
     
     pick_product.text = dict[@"product"];
     pick_default_code.text = dict[@"default_code"];
-    pick_src_location.text = dict[@"src_location"][1];
     pick_qty.text = GETSTRING(dict[@"qty"]);
-    pick_des_location.text = dict[@"des_location"];
     
+    NSNumber * is_return = dict[@"is_return"];
+    isReturned = [is_return boolValue];
+    if(!isReturned){
+        
+        pick_src_location.text = dict[@"src_location"][1];
+        pick_src_location_title.text = @"从库位";
+        pick_src_location_title.textColor = PICKER_TETMAIN_COLOR;
+        pick_des_location.text = dict[@"des_location"];
+        pick_des_location_title.text = @"到盘位";
+        pick_des_location_title.textColor = PICKER_TETMAIN_COLOR;
+        self.title = @"分拣任务";
+    }else{
+        pick_src_location.text = dict[@"des_location"];
+        pick_src_location_title.text = @"从盘位";
+        pick_src_location_title.textColor = [UIColor redColor];
+        pick_des_location.text = dict[@"src_location"][1];
+        pick_des_location_title.text = @"到库位";
+        pick_des_location_title.textColor = [UIColor redColor];
+        self.title = @"分拣任务";
+    }
+
     self.currentQty = dict[@"qty"];
     self.initialQty = dict[@"qty"];
     

@@ -132,9 +132,12 @@
             [self pushToViewControllerWithTransition:pickingVc withDirection:@"left" type:NO];
         }
             break;
-        case 203://获取称重明细
+        case 300://退货任务
         {
             [self stop];
+            [self playAudioFile:@"alert"];
+            PickingOutViewController * pickingVc = [[PickingOutViewController alloc]initWithData:responseObj fromVc:self];
+            [self pushToViewControllerWithTransition:pickingVc withDirection:@"left" type:NO];
         }
             break;
         case 400://finished
