@@ -17,6 +17,7 @@
 @interface WaitingViewController(){
     
     NSTimer * timer;
+    AVAudioPlayer *players;
 }
 @end
 
@@ -34,7 +35,6 @@
 -(void)createView{
     
     self.view.backgroundColor = RGB_COLOR(131, 25, 28, 1);
-    
     UILabel * waitLabel = [Tools createLabelWithFrame:CGRectMake(10, 150*S6, Wscreen-10, 30*S6) textContent:@"等待分配分拣任务" withFont:[UIFont systemFontOfSize:30*S6] textColor:[UIColor whiteColor] textAlignment:NSTextAlignmentCenter];
     waitLabel.centerX = self.view.centerX;
     [self.view addSubview:waitLabel];
@@ -51,6 +51,7 @@
 
 -(void)getData{
     
+    NSLog(@"网络请求开始");
     NSDictionary * dict = @{@"model":@"batar.mobile.task",@"method":@"get_task",@"args":@[@""],@"kwargs":@{}};
     [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
         if(error == nil){
@@ -75,6 +76,7 @@
         case 200://首条任务
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             GetTaskViewController * taskVc = [[GetTaskViewController alloc]initWithData:responseObj tag:NO];
             [self pushToViewControllerWithTransition:taskVc withDirection:@"right" type:NO];
         }
@@ -82,6 +84,7 @@
         case 201://获取当前任务
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             PickingInViewController * inputVc = [[PickingInViewController alloc]initWithData:responseObj tag:NO];
             [self pushToViewControllerWithTransition:inputVc withDirection:@"right" type:NO];
         }
@@ -89,6 +92,7 @@
         case 203://获取称重明细
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             WeightViewController * weightVc = [[WeightViewController alloc]initWithData:responseObj tag:YES];
             [self pushToViewControllerWithTransition:weightVc withDirection:@"right" type:NO];
         }
@@ -96,6 +100,7 @@
         case 400://finished
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             FinishInputViewController * finishedVc = [[FinishInputViewController alloc]initWithData:responseObj fromVc:self];
             [self pushToViewControllerWithTransition:finishedVc withDirection:@"right" type:NO];
         }
@@ -114,6 +119,7 @@
         case 200://首条任务
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             PickingOutViewController * pickOutVc = [[PickingOutViewController alloc]initWithData:responseObj fromVc:self];
             [self pushToViewControllerWithTransition:pickOutVc withDirection:@"left" type:NO];
         }
@@ -121,6 +127,7 @@
         case 201://获取当前任务
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             PickingOutViewController * pickingVc = [[PickingOutViewController alloc]initWithData:responseObj fromVc:self];
             [self pushToViewControllerWithTransition:pickingVc withDirection:@"left" type:NO];
         }
@@ -133,6 +140,7 @@
         case 400://finished
         {
             [self stop];
+            [self playAudioFile:@"alert"];
             PickingOutFinisedViewController * pickOutVc = [[PickingOutFinisedViewController alloc]initWithData:responseObj fromVc:self];
             [self pushToViewControllerWithTransition:pickOutVc withDirection:@"left" type:NO];
         }
@@ -153,5 +161,46 @@
 -(void)start{
     [timer setFireDate:[NSDate distantPast]];
 }
+
+- (void)playAudioFile:(NSString *)soundFileName{
+    // 震动
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    
+    NSString *fileName = [[NSBundle mainBundle]pathForResource:soundFileName ofType:@"wav"];
+    NSURL *fileUrl = [NSURL fileURLWithPath:fileName];
+    NSError *error = nil;
+    players = [[AVAudioPlayer alloc] initWithContentsOfURL:fileUrl error:&error];
+    if (!players) {
+        
+    } else {
+        [players setNumberOfLoops:0];
+        [players setDelegate:self];
+        [players play];
+    }
+}
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player{
+    
+    [player pause];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player{
+    
+    [player play];
+}
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
+    if(flag){
+        //        [player pause];
+        //        player = nil;
+    }
+}
+
+-(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error{
+    
+    NSLog(@"%@",error.description);
+}
+
 
 @end

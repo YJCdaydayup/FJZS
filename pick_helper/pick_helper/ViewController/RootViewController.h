@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
 typedef void(^GetBundleIMG)(NSData *imgData);
 

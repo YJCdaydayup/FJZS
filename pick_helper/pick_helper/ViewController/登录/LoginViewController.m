@@ -103,6 +103,11 @@
 
 -(void)loginAction{
     
+    if(self.pick_psw_tf.text.length==0||self.pick_user_tf.text.length==0){
+        [self showAlertView:@"请输入用户名或密码!" time:0.5];
+        return;
+    }
+    
     self.hud.labelText = @"正在登录,请稍后...";
     [self.hud show:YES];
     

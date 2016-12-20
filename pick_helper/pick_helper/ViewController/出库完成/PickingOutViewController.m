@@ -34,6 +34,9 @@ typedef enum : NSInteger{
     UILabel * pick_des_location;
     
     UIButton * checkNextBtn;
+    
+    //是否是退货
+    BOOL isReturned;
 }
 
 @property (nonatomic,assign) PickerOutType pickOutType;
@@ -346,17 +349,30 @@ typedef enum : NSInteger{
         if(self.pickOutType == PickerCheckBeforeType){
             
             [checkNextBtn setTitle:@"返回当前任务" forState:UIControlStateNormal];
+            [self configChangePlateBtn:NO];
             [self changeState:NO];
+            
         }else if (self.pickOutType == PickerCheckNextType){
             
             [checkNextBtn setTitle:@"下一条任务" forState:UIControlStateNormal];
+            [self configChangePlateBtn:YES];
         }
     }
-    
     if (self.pickOutType == PickerFromFinishType){
         
         [checkNextBtn setTitle:@"任务已完成" forState:UIControlStateNormal];
+        [self configChangePlateBtn:NO];
         [self changeState:NO];
+    }
+}
+
+-(void)configChangePlateBtn:(BOOL)state{
+    
+    changePlateBtn.enabled = state;
+    if(state){
+        [changePlateBtn setTitle:@"换盘" forState:UIControlStateNormal];
+    }else{
+        [changePlateBtn setTitle:@"" forState:UIControlStateNormal];
     }
 }
 
@@ -365,7 +381,6 @@ typedef enum : NSInteger{
     addBtn.enabled = state;
     loseBtn.enabled = state;
     pick_qty.enabled = state;
-    changePlateBtn.hidden = state;
 }
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

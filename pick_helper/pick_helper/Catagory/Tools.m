@@ -7,6 +7,7 @@
 //
 
 #import "Tools.h"
+#import "AppDelegate.h"
 
 @implementation Tools
 
@@ -140,6 +141,48 @@
     
     CGSize size = [text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12*S6]} context:nil].size;
     return size.width;
+}
+
++(void)exit{
+    
+    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [UIView beginAnimations:@"exitApplication" context:nil];
+    
+    [UIView setAnimationDuration:0.5];
+    
+    [UIView setAnimationDelegate:self];
+    
+    // [UIView setAnimationTransition:UIViewAnimationCurveEaseOut forView:self.view.window cache:NO];
+    
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:app.window cache:NO];
+    
+    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+    
+    //self.view.window.bounds = CGRectMake(0, 0, 0, 0);
+    
+    app.window.bounds = CGRectMake(0, 0, 0, 0);
+    
+    [UIView commitAnimations];
+}
+
+- (void)animationFinished:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    
+    if ([animationID compare:@"exitApplication"] == 0) {
+        
+        exit(0);
+    }
+}
+
++(void)presentFromWindow:(UIWindow *)window forward:(UIViewController *)vc{
+    
+    if(window.rootViewController.presentedViewController){
+        [window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:^{
+            [window.rootViewController presentViewController:vc animated:true completion:nil];
+        }];
+    }else {
+        [window.rootViewController presentViewController:vc animated:true completion:nil];
+    }
 }
 
 @end

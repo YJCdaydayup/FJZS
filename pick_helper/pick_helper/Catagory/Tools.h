@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RootViewController.h"
+#import "AppDelegate.h"
 #import <UIKit/UIKit.h>
 
 @interface Tools : NSObject
@@ -49,5 +51,11 @@
 
 //获取文字的宽度
 +(CGFloat)getTextWidth:(NSString *)text withHeight:(CGFloat)height;
+
+//退成当前程序
++(void)exit;
+
+//界面跳转
++(void)presentFromWindow:(UIWindow *)window forward:(UIViewController *)vc;
 
 @end

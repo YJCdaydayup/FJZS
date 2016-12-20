@@ -8,9 +8,10 @@
 
 #import "RootViewController.h"
 #import "WaitingViewController.h"
+#import "LoginViewController.h"
 
 @interface RootViewController ()
-
+@property (nonatomic,strong) UIAlertController * alertVc;
 @end
 
 @implementation RootViewController
@@ -131,6 +132,49 @@
 
 -(void)pick_loginByThirdParty:(NSError *)error{
     
+    //    NSLog(@"错误描述: %@",error.description);
+    
+    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if([error.description containsString:@"404"]){
+        [Tools presentFromWindow:app.window forward:self.alertVc];
+    }else{
+        //请求错误
+        UIAlertController * alertVc = [UIAlertController alertControllerWithTitle:@"获取数据失败!" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [self presentViewController:alertVc animated:YES completion:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [alertVc dismissViewControllerAnimated:YES completion:nil];
+            });
+        }];
+    }
+}
+
+-(UIAlertController *)alertVc{
+    
+    AppDelegate * app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if(!_alertVc){
+        _alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"当前账号被其他手机登录" preferredStyle:UIAlertControllerStyleAlert];
+        //被其他用户登录
+        UIAlertAction * exitBtn = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [Tools exit];
+        }];
+        UIAlertAction * reLoginBtn = [UIAlertAction actionWithTitle:@"重新登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            LoginViewController * loginVc = [[LoginViewController alloc]init];
+            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:loginVc];
+            [Tools presentFromWindow:app.window forward:nvc];
+//            if(self.presentedViewController){
+//                [self.presentedViewController dismissViewControllerAnimated:NO completion:^{
+//                    [self presentViewController:nvc animated:true completion:nil];
+//                }];
+//            }else {
+//                [self presentViewController:nvc animated:true completion:nil];
+//            }
+        }];
+        [_alertVc addAction:exitBtn];
+        [_alertVc addAction:reLoginBtn];
+    }
+    return _alertVc;
 }
 
 - (void)didReceiveMemoryWarning {

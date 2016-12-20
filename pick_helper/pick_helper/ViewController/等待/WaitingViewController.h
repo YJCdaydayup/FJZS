@@ -7,7 +7,8 @@
 //
 
 #import "RootViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface WaitingViewController : RootViewController
+@interface WaitingViewController : RootViewController<AVAudioPlayerDelegate>
 
 @end
