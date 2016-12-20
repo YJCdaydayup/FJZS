@@ -59,8 +59,6 @@ typedef enum : NSInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide) name:UIKeyboardWillHideNotification object:nil];
-    
     [self pick_setNavWithTitle:@"入库分拣任务"];
     [self pick_configViewWithImg:@"jianru" isWeight:NO];
 }
@@ -352,7 +350,6 @@ typedef enum : NSInteger {
     if([self.destinateVc isKindOfClass:[FinishInputViewController class]]){
         self.pickerType = PickerFinishedType;
     }else{
-        
         NSString * locationId = dict[@"location_id"];
         if(locationId.length>0&&self.pickerType != PickerBeforeTaskType){
             self.pickerType = PickerSeperateType;

@@ -20,6 +20,8 @@
     [super viewDidLoad];
     
     [self pick_setNavWithTitle:@"入库分拣完成"];
+    
+    [self createView];
 }
 
 -(void)createView{
@@ -27,7 +29,7 @@
     for(UIView * subView in self.view.subviews){
         [subView removeFromSuperview];
     }
-    [self pick_configViewWithImg:@"wancheng" isWeight:NO];
+    [self pick_configViewWithPickOutImg:@"finish"];
     
     UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(10*S6, NAV_BAR_HEIGHT+50*S6, Wscreen-20*S6, Hscreen-90*S6-NAV_BAR_HEIGHT-50*S6)];
     bgView.layer.borderColor = [PICKER_BORDER_COLOR CGColor];

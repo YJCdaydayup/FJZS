@@ -11,6 +11,8 @@
 
 #define PICKER_USER      @"user_name"
 #define PICKER_PSW       @"password"
+#define SERVEALERT       @"serverAlert"
+#define SERVEALERTID     @"serverAlertId"
 
 #endif
 

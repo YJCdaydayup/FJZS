@@ -158,13 +158,6 @@
     return YES;
 }
 
--(void)keyBoardWillHide{
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        self.view.transform = CGAffineTransformIdentity;
-    }];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

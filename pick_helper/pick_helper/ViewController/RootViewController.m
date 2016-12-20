@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "WaitingViewController.h"
 
 @interface RootViewController ()
 
@@ -14,15 +15,21 @@
 
 @implementation RootViewController
 
+-(void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide) name:UIKeyboardWillHideNotification object:nil];
     [self createView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 -(void)pick_configViewWithImg:(NSString *)imgName isWeight:(BOOL)isWeight{
@@ -53,6 +60,13 @@
         imgView.image = [UIImage imageWithData:imgData];
     }];
     [self.view addSubview:imgView];
+}
+
+-(void)keyBoardWillHide{
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.view.transform = CGAffineTransformIdentity;
+    }];
 }
 
 -(instancetype)initWithData:(id)responseObject tag:(BOOL)fromTag{

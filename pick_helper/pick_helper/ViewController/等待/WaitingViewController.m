@@ -114,6 +114,8 @@
         case 200://首条任务
         {
             [self stop];
+            PickingOutViewController * pickOutVc = [[PickingOutViewController alloc]initWithData:responseObj fromVc:self];
+            [self pushToViewControllerWithTransition:pickOutVc withDirection:@"left" type:NO];
         }
             break;
         case 201://获取当前任务
@@ -131,6 +133,8 @@
         case 400://finished
         {
             [self stop];
+            PickingOutFinisedViewController * pickOutVc = [[PickingOutFinisedViewController alloc]initWithData:responseObj fromVc:self];
+            [self pushToViewControllerWithTransition:pickOutVc withDirection:@"left" type:NO];
         }
             break;
         case 500://keep waiting

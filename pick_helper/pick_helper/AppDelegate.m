@@ -8,10 +8,10 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-#import "FinishInputViewController.h"
+#import "WaitingViewController.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic,strong) NSTimer * taskTimer;
 @end
 
 @implementation AppDelegate
@@ -19,12 +19,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(start) name:SERVEALERT object:nil];
+    
+    [self createTimer];
     [self commonSetting];
     
     UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
     self.window.rootViewController = nvc;
     
     return YES;
+}
+
+-(void)createTimer{
+    
+    self.taskTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(serverCheck) userInfo:nil repeats:YES];
+    [self stop];
+}
+
+-(void)serverCheck{
+    
+    NSLog(@"%@",[[KUSERDEFAUL objectForKey:SERVEALERTID]class]);
+    NSDictionary * dict = @{@"model":@"batar.mobile.picking",@"method":@"get_task_state",@"args":@[[KUSERDEFAUL objectForKey:SERVEALERTID]],@"kwargs":@{}};
+    [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
+        
+        if(error == nil){
+            BOOL state = [responseObject boolValue];
+            if(state){
+                //交付
+                [self stop];
+                WaitingViewController * waitingVc = [[WaitingViewController alloc]init];
+                [self.window.rootViewController pushToViewControllerWithTransition:waitingVc withDirection:@"left" type:NO];
+            }
+        }else{
+            [self stop];
+        }
+    }];
+}
+
+-(void)stop{
+    
+    [self.taskTimer setFireDate:[NSDate distantFuture]];
+}
+
+-(void)start{
+    
+    [self.taskTimer setFireDate:[NSDate distantPast]];
 }
 
 -(void)commonSetting{
