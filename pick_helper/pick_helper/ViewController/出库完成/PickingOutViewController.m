@@ -44,11 +44,7 @@ typedef enum : NSInteger{
 @property (nonatomic,strong) NSDictionary * currentDict;
 @property (nonatomic,strong) NSNumber * currentQty;
 @property (nonatomic,strong) NSNumber * initialQty;
-
 @property (nonatomic,strong) NSMutableDictionary * backToCurrentDict;
-
-@property (nonatomic,assign) BOOL isReturned;
-
 @end
 
 @implementation PickingOutViewController
