@@ -18,13 +18,13 @@
 #import "UIViewController+Extension.h"
 #import "Pick_Color.h"
 #import "Common.h"
-#import "Pick_define.h"
 #import "Pick_Url.h"
 #import "StringConstants.h"
 #import "YLAutoLayOut.h"
 #import "MBProgressHUD.h"
 #import "PickerNetManager.h"
 #import "GifView.h"
+#import "PickDefine.h"
 
 
 #endif /* pch_pch */

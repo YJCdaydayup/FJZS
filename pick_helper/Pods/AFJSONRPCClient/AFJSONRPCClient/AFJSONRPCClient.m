@@ -102,6 +102,7 @@ static NSString * AFJSONRPCLocalizedErrorMessageForCode(NSInteger code) {
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSMutableURLRequest *request = [self requestWithMethod:method parameters:parameters requestId:requestId];
+    request.timeoutInterval = 5.0f;
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
     [self.operationQueue addOperation:operation];
 }

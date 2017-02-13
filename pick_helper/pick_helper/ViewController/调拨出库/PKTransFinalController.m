@@ -1,31 +1,25 @@
 //
-//  PickingOutFinisedViewController.m
+//  PKTransFinalController.m
 //  pick_helper
 //
-//  Created by 杨力 on 19/12/2016.
-//  Copyright © 2016 杨力. All rights reserved.
+//  Created by 杨力 on 13/2/2017.
+//  Copyright © 2017 杨力. All rights reserved.
 //
 
-#import "PickingOutFinisedViewController.h"
-#import "PickingOutViewController.h"
+#import "PKTransFinalController.h"
+#import "PKTransController.h"
 
-@interface PickingOutFinisedViewController ()
+@interface PKTransFinalController ()
 
 @property (nonatomic,strong) UILabel * totalLabel;
 
 @end
 
-@implementation PickingOutFinisedViewController
-
--(void)viewWillAppear:(BOOL)animated{
-    
-    [super viewWillAppear:animated];
-}
+@implementation PKTransFinalController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self pick_setNavWithTitle:@"分拣完成"];
+    [self pick_setNavWithTitle:@"调拨完成"];
 }
 
 -(void)createView{
@@ -43,7 +37,7 @@
     }];
     [self.view addSubview:imgView];
     
-    UILabel * titleLable = [Tools createLabelWithFrame:CGRectMake(0, CGRectGetMaxY(imgView.frame)+50*S6, Wscreen,26*S6) textContent:@"分拣任务已全部完成" withFont:[UIFont systemFontOfSize:26*S6] textColor:[UIColor blackColor] textAlignment:NSTextAlignmentCenter];
+    UILabel * titleLable = [Tools createLabelWithFrame:CGRectMake(0, CGRectGetMaxY(imgView.frame)+50*S6, Wscreen,26*S6) textContent:@"调拨出库已全部完成" withFont:[UIFont systemFontOfSize:26*S6] textColor:[UIColor blackColor] textAlignment:NSTextAlignmentCenter];
     titleLable.centerX = self.view.centerX;
     [self.view addSubview:titleLable];
     
@@ -55,7 +49,7 @@
     self.totalLabel.layer.borderWidth = 1.0*S6;
     [self.view addSubview:self.totalLabel];
     
-    UILabel * descripeLable = [Tools createLabelWithFrame:CGRectMake(0, CGRectGetMaxY(self.totalLabel.frame)+20*S6, Wscreen-135*S6, 52*S6) textContent:@"请把已分拣的货品移交至验货台，并当场确认完成交交接。" withFont:[UIFont systemFontOfSize:18*S6] textColor:PICKER_TETMAIN_COLOR textAlignment:NSTextAlignmentLeft];
+    UILabel * descripeLable = [Tools createLabelWithFrame:CGRectMake(0, CGRectGetMaxY(self.totalLabel.frame)+20*S6, Wscreen-135*S6, 60*S6) textContent:@"请把已调拨出库的货品移交至验货台，并当场确认完成交交接。" withFont:[UIFont systemFontOfSize:17*S6] textColor:PICKER_TETMAIN_COLOR textAlignment:NSTextAlignmentLeft];
     descripeLable.centerX = self.view.centerX;
     descripeLable.numberOfLines = 0;
     [self.view addSubview:descripeLable];
@@ -75,13 +69,12 @@
 
 -(void)createData{
     
-    NSDictionary * dict = @{@"model":@"batar.mobile.task",@"method":@"get_task",@"args":@[@""],@"kwargs":@{}};
+    NSDictionary * dict = @{@"model":@"internal.trans.mobile",@"method":@"get_state",@"args":@[@""],@"kwargs":@{}};
     [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
         if(error == nil){
             
-            NSInteger code_int = [responseObject[@"code"]integerValue];
-            if(code_int == 400){
-                [self dealWithResult:responseObject];
+            if([responseObject integerValue]== 0){
+                [self dealWithResult];
             }
         }else{
             [self pick_loginByThirdParty:error];
@@ -89,12 +82,11 @@
     }];
 }
 
--(void)dealWithResult:(id)responseObject{
-    
-    self.responseObj = responseObject;
-    [KUSERDEFAUL setValue:responseObject[@"data"][@"id"] forKey:SERVEALERTID];
-    NSLog(@"最后界面的值: %@; 类型:%@",[KUSERDEFAUL objectForKey:SERVEALERTID],[[KUSERDEFAUL objectForKey:SERVEALERTID] class]);
-    [[NSNotificationCenter defaultCenter]postNotificationName:SERVEALERTNOTICE object:nil];
+-(void)dealWithResult{
+
+    [KUSERDEFAUL setValue:self.responseObj[@"data"][@"id"] forKey:PKTransServerID];
+    NSLog(@"最后界面的值: %@; 类型:%@",[KUSERDEFAUL objectForKey:PKTransServerID],[[KUSERDEFAUL objectForKey:SERVEALERTID] class]);
+    [[NSNotificationCenter defaultCenter]postNotificationName:PKTransFinishedNotice object:nil];
     
     NSString * total = [NSString stringWithFormat:@"分拣盘内总数: %@",self.responseObj[@"data"][@"total"]];
     self.totalLabel.text = total;
@@ -102,7 +94,7 @@
 
 -(void)checkAction{
     
-    PickingOutViewController * pickOutVc = [[PickingOutViewController alloc]initWithData:self.responseObj fromVc:self];
+    PKTransController * pickOutVc = [[PKTransController alloc]initWithData:self.responseObj fromVc:self];
     [self pushToViewControllerWithTransition:pickOutVc withDirection:@"left" type:NO];
 }
 
@@ -110,15 +102,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

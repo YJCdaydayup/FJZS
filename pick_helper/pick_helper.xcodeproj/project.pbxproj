@@ -11,6 +11,9 @@
 		8F11FEF91E00FC660016E563 /* PickerNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F11FEF81E00FC660016E563 /* PickerNetManager.m */; };
 		8F180CF61E01BBC90067E28E /* WaitingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F180CF51E01BBC90067E28E /* WaitingViewController.m */; };
 		8F180CF91E01C5A80067E28E /* GifView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F180CF81E01C5A80067E28E /* GifView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8F24D5151E52255600FE0F1B /* PKTransController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F24D5141E52255600FE0F1B /* PKTransController.m */; };
+		8F24D5181E52273C00FE0F1B /* PKTransFinalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F24D5171E52273C00FE0F1B /* PKTransFinalController.m */; };
+		8F24D51B1E524E1000FE0F1B /* PickDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F24D51A1E524E1000FE0F1B /* PickDefine.m */; };
 		8F2CA18A1E00B5E800782BEF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F2CA1891E00B5E800782BEF /* LoginViewController.m */; };
 		8F526F1C1E009F1000AB2350 /* add_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F526F031E009F1000AB2350 /* add_sel@2x.png */; };
 		8F526F1D1E009F1000AB2350 /* lose_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F526F041E009F1000AB2350 /* lose_sel@2x.png */; };
@@ -130,6 +133,12 @@
 		8F180CF51E01BBC90067E28E /* WaitingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitingViewController.m; sourceTree = "<group>"; };
 		8F180CF71E01C5A80067E28E /* GifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifView.h; sourceTree = "<group>"; };
 		8F180CF81E01C5A80067E28E /* GifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifView.m; sourceTree = "<group>"; };
+		8F24D5131E52255600FE0F1B /* PKTransController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTransController.h; sourceTree = "<group>"; };
+		8F24D5141E52255600FE0F1B /* PKTransController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKTransController.m; sourceTree = "<group>"; };
+		8F24D5161E52273C00FE0F1B /* PKTransFinalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTransFinalController.h; sourceTree = "<group>"; };
+		8F24D5171E52273C00FE0F1B /* PKTransFinalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKTransFinalController.m; sourceTree = "<group>"; };
+		8F24D5191E524E1000FE0F1B /* PickDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickDefine.h; sourceTree = "<group>"; };
+		8F24D51A1E524E1000FE0F1B /* PickDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickDefine.m; sourceTree = "<group>"; };
 		8F2CA1881E00B5E800782BEF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		8F2CA1891E00B5E800782BEF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8F526F031E009F1000AB2350 /* add_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_sel@2x.png"; sourceTree = "<group>"; };
@@ -238,7 +247,6 @@
 		8FF82A7F1E00B23B0093DD53 /* Pick_Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pick_Color.h; sourceTree = "<group>"; };
 		8FF82A811E00B23B0093DD53 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../Define/Define/Common.h; sourceTree = "<group>"; };
 		8FF82A821E00B23B0093DD53 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Common.m; path = ../Define/Define/Common.m; sourceTree = "<group>"; };
-		8FF82A831E00B23B0093DD53 /* Pick_define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pick_define.h; path = Define/Pick_define.h; sourceTree = "<group>"; };
 		8FF82A841E00B23B0093DD53 /* Pick_Url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pick_Url.h; sourceTree = "<group>"; };
 		8FF82A881E00B25A0093DD53 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		8FF82A891E00B25A0093DD53 /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
@@ -304,6 +312,17 @@
 				836F33F8321D1C1750564C35 /* libPods-pick_helper.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8F24D5121E52242000FE0F1B /* 调拨出库 */ = {
+			isa = PBXGroup;
+			children = (
+				8F24D5131E52255600FE0F1B /* PKTransController.h */,
+				8F24D5141E52255600FE0F1B /* PKTransController.m */,
+				8F24D5161E52273C00FE0F1B /* PKTransFinalController.h */,
+				8F24D5171E52273C00FE0F1B /* PKTransFinalController.m */,
+			);
+			path = "调拨出库";
 			sourceTree = "<group>";
 		};
 		8F526F021E009F1000AB2350 /* @2x */ = {
@@ -573,7 +592,8 @@
 			children = (
 				8FF82A7F1E00B23B0093DD53 /* Pick_Color.h */,
 				8FF82A841E00B23B0093DD53 /* Pick_Url.h */,
-				8FF82A831E00B23B0093DD53 /* Pick_define.h */,
+				8F24D5191E524E1000FE0F1B /* PickDefine.h */,
+				8F24D51A1E524E1000FE0F1B /* PickDefine.m */,
 				8FF82A7E1E00B21B0093DD53 /* StringConstants.h */,
 			);
 			path = Define;
@@ -623,6 +643,7 @@
 		8F8B3ED01E005CF800D6A104 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8F24D5121E52242000FE0F1B /* 调拨出库 */,
 				8F526F401E00A34400AB2350 /* 登录 */,
 				8F526F411E00A34400AB2350 /* 等待 */,
 				8F526F3C1E00A34400AB2350 /* 入库 */,
@@ -984,12 +1005,14 @@
 				8F11FEF91E00FC660016E563 /* PickerNetManager.m in Sources */,
 				8FF82A771E00B1FF0093DD53 /* UIBarButtonItem+Extesion.m in Sources */,
 				8FF82AA21E00B25A0093DD53 /* JSONModelClassProperty.m in Sources */,
+				8F24D5151E52255600FE0F1B /* PKTransController.m in Sources */,
 				8FF82A761E00B1FF0093DD53 /* Tools.m in Sources */,
 				8FF82AA01E00B25A0093DD53 /* JSONModel.m in Sources */,
 				8F8047891E0862830018F8FA /* PickingOutViewController.m in Sources */,
 				8F180CF91E01C5A80067E28E /* GifView.m in Sources */,
 				8F92BA721E046E9200CC547A /* GetTaskViewController.m in Sources */,
 				8FF82AB01E00B2640093DD53 /* MBProgressHUD.m in Sources */,
+				8F24D51B1E524E1000FE0F1B /* PickDefine.m in Sources */,
 				8FF82AA31E00B25A0093DD53 /* JSONModelError.m in Sources */,
 				8F80478C1E0862A50018F8FA /* PickingOutFinisedViewController.m in Sources */,
 				8FF82ABB1E00B4040093DD53 /* RootViewController.m in Sources */,
@@ -1000,6 +1023,7 @@
 				8FF82A7A1E00B1FF0093DD53 /* UILabel+Extension.m in Sources */,
 				8F66273F1E0308FA00C3D897 /* PickingInViewController.m in Sources */,
 				8F8B3E991E00593700D6A104 /* main.m in Sources */,
+				8F24D5181E52273C00FE0F1B /* PKTransFinalController.m in Sources */,
 				8FF82A7D1E00B1FF0093DD53 /* UIViewController+Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

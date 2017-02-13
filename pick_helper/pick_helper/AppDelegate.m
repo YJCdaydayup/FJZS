@@ -13,16 +13,17 @@
 @interface AppDelegate ()
 
 @property (nonatomic,strong) NSTimer * taskTimer;
+@property (nonatomic,strong) NSTimer * transTimer;
 @property (nonatomic,strong) UIAlertController * alertVc;
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(start) name:SERVEALERT object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(start) name:SERVEALERTNOTICE object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(transStart) name:PKTransFinishedNotice object:nil];
     
     [self createTimer];
     [self commonSetting];
@@ -37,6 +38,10 @@
     
     self.taskTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(serverCheck) userInfo:nil repeats:YES];
     [self stop];
+    
+    self.transTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(transServerCheck) userInfo:nil repeats:YES];
+    [self transStop];
+    
 }
 
 -(void)serverCheck{
@@ -61,14 +66,44 @@
     }];
 }
 
+-(void)transServerCheck{
+    NSLog(@"通知收到的值: %@; 类型:%@",[KUSERDEFAUL objectForKey:SERVEALERTID],[[KUSERDEFAUL objectForKey:PKTransServerID] class]);
+    NSDictionary * dict = @{@"model":@"internal.trans.mobile",@"method":@"get_state",@"args":@[[KUSERDEFAUL objectForKey:PKTransServerID]],@"kwargs":@{}};
+    [PickerNetManager pick_requestPickerDataWithURL:PICKER_TASK param:dict callback:^(id responseObject, NSError *error) {
+        
+        if(error == nil){
+            BOOL state = [responseObject boolValue];
+            if(state){
+                //交付
+                [self transStop];
+                WaitingViewController * waitingVc = [[WaitingViewController alloc]init];
+                UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:waitingVc];
+                [Tools presentFromWindow:self.window forward:nvc];
+            }
+        }else{
+            [self transStop];
+            [self pick_loginByThirdParty:error];
+        }
+    }];
+}
+
 -(void)stop{
     
     [self.taskTimer setFireDate:[NSDate distantFuture]];
 }
 
+-(void)transStop{
+    
+    [self.transTimer setFireDate:[NSDate distantFuture]];
+}
+
 -(void)start{
     
     [self.taskTimer setFireDate:[NSDate distantPast]];
+}
+
+-(void)transStart{
+    [self.transTimer setFireDate:[NSDate distantPast]];
 }
 
 -(void)commonSetting{

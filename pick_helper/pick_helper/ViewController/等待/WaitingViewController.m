@@ -13,6 +13,8 @@
 #import "FinishInputViewController.h"
 #import "PickingOutFinisedViewController.h"
 #import "PickingOutViewController.h"
+#import "PKTransController.h"
+#import "PKTransFinalController.h"
 
 @interface WaitingViewController(){
     
@@ -59,6 +61,10 @@
             if([type isEqualToString:@"input"]){
                 //入库任务
                 [self inputTask:responseObject];
+            }else if([type isEqualToString:@"trans"]){
+                //调拨出库
+                [self transTask:responseObject];
+                
             }else{
                 //出库任务
                 [self pickTask:responseObject];
@@ -67,6 +73,43 @@
             [self pick_loginByThirdParty:error];
         }
     }];
+}
+
+#pragma mark - 调拨出库
+-(void)transTask:(id)responseObj{
+    
+//    jsonObject: {"type":"trans","code":"200","data":{"panwei":"1-1","product":"A000001手环","state":"process","default_code":"1700137\/3.0","sequence":1,"src_location":"1-36","id":1,"uom":"Unit(s)","qty":1}}
+    NSInteger code_int = [responseObj[@"code"]integerValue];
+    switch (code_int) {
+        case 200://首条任务
+        {
+            [self stop];
+            [self playAudioFile:@"alert"];
+            PKTransController * transVc = [[PKTransController alloc]initWithData:responseObj tag:NO];
+            [self pushToViewControllerWithTransition:transVc withDirection:@"right" type:NO];
+        }
+            break;
+        case 201://获取当前任务
+        {
+            [self stop];
+            [self playAudioFile:@"alert"];
+            PKTransController * transVc = [[PKTransController alloc]initWithData:responseObj tag:NO];
+            [self pushToViewControllerWithTransition:transVc withDirection:@"right" type:NO];
+        }
+            break;
+        case 400://finished
+        {
+            [self stop];
+            [self playAudioFile:@"alert"];
+            PKTransFinalController * finishedVc = [[PKTransFinalController alloc]initWithData:responseObj fromVc:self];
+            [self pushToViewControllerWithTransition:finishedVc withDirection:@"right" type:NO];
+        }
+            break;
+        case 500://keep waiting
+            break;
+        default:
+            break;
+    }
 }
 
 -(void)inputTask:(id)responseObj{
